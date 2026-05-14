@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(docker --version)",
+      "Bash(docker compose *)",
+      "Bash(tee /tmp/lw-build.log)",
+      "Bash(grep -qE \"^$\")",
+      "Bash(xargs -r docker inspect --format '{{.State.Status}}')",
+      "Read(//tmp/**)",
+      "Bash(netstat -tlnp)",
+      "Bash(sudo lsof *)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code} - %{time_total}s\\\\n\" http://localhost:8001/health)",
+      "Bash(curl -s -w \"\\\\nHTTP %{http_code}\\\\n\" http://localhost:8001/health)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:5174/)",
+      "Bash(curl -s -X POST http://localhost:8001/api/v1/auth/register -H 'Content-Type: application/json' -d '{\"email\":\"admin@learnwords.local\",\"username\":\"admin\",\"password\":\"Admin1234!\"}')",
+      "Bash(python3 -m json.tool)",
+      "Bash(curl -s -X POST http://localhost:8001/api/v1/auth/register -H 'Content-Type: application/json' -d '{\"email\":\"admin@learnwords.dev\",\"username\":\"admin\",\"password\":\"Admin1234!\"}')",
+      "Bash(curl -s -X POST http://localhost:8001/api/v1/auth/login -H 'Content-Type: application/json' -d '{\"email\":\"admin@learnwords.dev\",\"password\":\"Admin1234!\"}')",
+      "Bash(npx tsc *)",
+      "Bash(node_modules/.bin/tsc --noEmit)",
+      "Bash(python3 -c \"import ast; [ast.parse\\(open\\(f\\).read\\(\\)\\) for f in ['/home/ahror/Projects/Learn_Words/backend/app/models/story.py','/home/ahror/Projects/Learn_Words/backend/app/models/deck.py','/home/ahror/Projects/Learn_Words/backend/app/schemas/story.py','/home/ahror/Projects/Learn_Words/backend/app/services/story.py','/home/ahror/Projects/Learn_Words/backend/app/api/v1/stories.py','/home/ahror/Projects/Learn_Words/backend/app/api/v1/admin.py','/home/ahror/Projects/Learn_Words/backend/alembic/versions/002_story_deck_link.py']]; print\\('OK'\\)\")",
+      "Bash(python3 -c \"import ast; [ast.parse\\(open\\(f\\).read\\(\\)\\) for f in ['/home/ahror/Projects/Learn_Words/backend/app/models/course.py','/home/ahror/Projects/Learn_Words/backend/app/models/deck.py','/home/ahror/Projects/Learn_Words/backend/app/models/story.py','/home/ahror/Projects/Learn_Words/backend/app/models/__init__.py','/home/ahror/Projects/Learn_Words/backend/app/schemas/course.py','/home/ahror/Projects/Learn_Words/backend/app/schemas/story.py','/home/ahror/Projects/Learn_Words/backend/app/schemas/deck.py','/home/ahror/Projects/Learn_Words/backend/app/services/course.py','/home/ahror/Projects/Learn_Words/backend/app/services/story.py','/home/ahror/Projects/Learn_Words/backend/app/api/v1/courses.py','/home/ahror/Projects/Learn_Words/backend/app/api/v1/router.py','/home/ahror/Projects/Learn_Words/backend/alembic/versions/003_courses.py']]; print\\('OK'\\)\")",
+      "Bash(python3 -c \"import ast; [ast.parse\\(open\\(f\\).read\\(\\)\\) for f in ['/home/ahror/Projects/Learn_Words/backend/app/api/v1/courses.py','/home/ahror/Projects/Learn_Words/backend/app/services/course.py','/home/ahror/Projects/Learn_Words/backend/app/schemas/course.py']]; print\\('OK'\\)\")",
+      "Bash(grep -E '\\\\.\\(tsx|ts|jsx|js|vue|svelte\\)$')",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('admin',{}\\), indent=2, ensure_ascii=False\\)\\)\")",
+      "Bash(tsc --version)"
+    ]
+  }
+}
