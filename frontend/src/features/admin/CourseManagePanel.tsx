@@ -199,7 +199,7 @@ export function CourseManagePanel({ courseId, onBack }: Props) {
         <TabButton
           active={tab === 'lessons'}
           onClick={() => setTab('lessons')}
-          gradient="from-primary-500 via-violet-500 to-fuchsia-500"
+          gradient="from-primary-500 via-primary-500 to-primary-500"
           count={lessons?.length ?? 0}
           label={t('admin.courses.tabLessons')}
           icon={
@@ -395,7 +395,7 @@ export function CourseManagePanel({ courseId, onBack }: Props) {
                         detachDeckMut.mutate(d.id);
                     }}
                     title={t('admin.courses.detach')}
-                    className="opacity-0 group-hover:opacity-100 inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-400 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-500/10 transition-all hover:scale-110 active:scale-95"
+                    className="opacity-0 group-hover:opacity-100 inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-400 hover:bg-lives-50 hover:text-lives-600 dark:hover:bg-lives-500/10 transition-all hover:scale-110 active:scale-95"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M18 6 6 18" />
@@ -544,7 +544,7 @@ export function CourseManagePanel({ courseId, onBack }: Props) {
                         detachStoryMut.mutate(s.id);
                     }}
                     title={t('admin.courses.detach')}
-                    className="opacity-0 group-hover:opacity-100 inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-400 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-500/10 transition-all hover:scale-110 active:scale-95"
+                    className="opacity-0 group-hover:opacity-100 inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-400 hover:bg-lives-50 hover:text-lives-600 dark:hover:bg-lives-500/10 transition-all hover:scale-110 active:scale-95"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M18 6 6 18" />
@@ -605,8 +605,8 @@ function LessonsTab({
     <div className="space-y-4 animate-fade-in-up">
       {/* Add lesson form */}
       <div className="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden">
-        <div className="px-4 sm:px-5 py-3 border-b border-slate-200 dark:border-slate-700 bg-gradient-to-r from-primary-50 to-violet-50 dark:from-primary-500/10 dark:to-violet-500/10 flex items-center gap-2">
-          <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 via-violet-500 to-fuchsia-500 text-white shadow-md">
+        <div className="px-4 sm:px-5 py-3 border-b border-slate-200 dark:border-slate-700 bg-gradient-to-r from-primary-50 to-primary-50 dark:from-primary-500/10 dark:to-primary-500/10 flex items-center gap-2">
+          <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 via-primary-500 to-primary-500 text-white shadow-md">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
@@ -715,7 +715,7 @@ function LessonsTab({
         </div>
         {lessons.length === 0 ? (
           <div className="px-5 py-12 text-center">
-            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-100 to-violet-100 dark:from-primary-500/15 dark:to-violet-500/15 text-primary-600 dark:text-primary-400 mb-3">
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-100 to-primary-100 dark:from-primary-500/15 dark:to-primary-500/15 text-primary-600 dark:text-primary-400 mb-3">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="8" y1="6" x2="21" y2="6" />
                 <line x1="8" y1="12" x2="21" y2="12" />
@@ -733,7 +733,7 @@ function LessonsTab({
                 key={l.id}
                 className={`px-4 sm:px-5 py-3 flex items-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors animate-fade-in-up stagger-${(i % 6) + 1}`}
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 via-violet-500 to-fuchsia-500 text-white flex items-center justify-center flex-shrink-0 shadow-md font-extrabold text-sm">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 via-primary-500 to-primary-500 text-white flex items-center justify-center flex-shrink-0 shadow-md font-extrabold text-sm">
                   {i + 1}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -791,7 +791,7 @@ function LessonsTab({
                         onRemove(l.id);
                     }}
                     title={t('common.delete')}
-                    className="inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-400 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-500/10 transition-all"
+                    className="inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-400 hover:bg-lives-50 hover:text-lives-600 dark:hover:bg-lives-500/10 transition-all"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M3 6h18" />

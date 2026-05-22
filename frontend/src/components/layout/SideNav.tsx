@@ -33,52 +33,52 @@ const COLOR_STYLES: Record<
   { iconBg: string; iconText: string; gradient: string; shadow: string; ring: string; dot: string }
 > = {
   indigo: {
-    iconBg: 'bg-indigo-50 dark:bg-indigo-500/10',
-    iconText: 'text-indigo-600 dark:text-indigo-400',
-    gradient: 'from-indigo-500 to-violet-600',
-    shadow: 'shadow-indigo-500/30',
-    ring: 'ring-indigo-500',
-    dot: 'bg-indigo-500',
+    iconBg: 'bg-primary-50 dark:bg-primary-500/10',
+    iconText: 'text-primary-600 dark:text-primary-400',
+    gradient: 'from-primary-500 to-primary-600',
+    shadow: 'shadow-primary-500/30',
+    ring: 'ring-primary-500',
+    dot: 'bg-primary-500',
   },
   emerald: {
-    iconBg: 'bg-emerald-50 dark:bg-emerald-500/10',
-    iconText: 'text-emerald-600 dark:text-emerald-400',
-    gradient: 'from-emerald-500 to-teal-600',
-    shadow: 'shadow-emerald-500/30',
-    ring: 'ring-emerald-500',
-    dot: 'bg-emerald-500',
+    iconBg: 'bg-success-50 dark:bg-success-500/10',
+    iconText: 'text-success-600 dark:text-success-400',
+    gradient: 'from-success-500 to-success-600',
+    shadow: 'shadow-success-500/30',
+    ring: 'ring-success-500',
+    dot: 'bg-success-500',
   },
   amber: {
-    iconBg: 'bg-amber-50 dark:bg-amber-500/10',
-    iconText: 'text-amber-600 dark:text-amber-400',
-    gradient: 'from-amber-500 to-orange-600',
-    shadow: 'shadow-amber-500/30',
-    ring: 'ring-amber-500',
-    dot: 'bg-amber-500',
+    iconBg: 'bg-xp-50 dark:bg-xp-500/10',
+    iconText: 'text-xp-600 dark:text-xp-400',
+    gradient: 'from-xp-400 to-xp-500',
+    shadow: 'shadow-xp-500/30',
+    ring: 'ring-xp-500',
+    dot: 'bg-xp-500',
   },
   sky: {
     iconBg: 'bg-sky-50 dark:bg-sky-500/10',
     iconText: 'text-sky-600 dark:text-sky-400',
-    gradient: 'from-sky-500 to-blue-600',
+    gradient: 'from-sky-400 to-primary-500',
     shadow: 'shadow-sky-500/30',
     ring: 'ring-sky-500',
     dot: 'bg-sky-500',
   },
   rose: {
-    iconBg: 'bg-rose-50 dark:bg-rose-500/10',
-    iconText: 'text-rose-600 dark:text-rose-400',
-    gradient: 'from-rose-500 to-pink-600',
-    shadow: 'shadow-rose-500/30',
-    ring: 'ring-rose-500',
-    dot: 'bg-rose-500',
+    iconBg: 'bg-lives-50 dark:bg-lives-500/10',
+    iconText: 'text-lives-500 dark:text-lives-400',
+    gradient: 'from-lives-500 to-lives-600',
+    shadow: 'shadow-lives-500/30',
+    ring: 'ring-lives-500',
+    dot: 'bg-lives-500',
   },
   fuchsia: {
-    iconBg: 'bg-fuchsia-50 dark:bg-fuchsia-500/10',
-    iconText: 'text-fuchsia-600 dark:text-fuchsia-400',
-    gradient: 'from-fuchsia-500 to-purple-600',
-    shadow: 'shadow-fuchsia-500/30',
-    ring: 'ring-fuchsia-500',
-    dot: 'bg-fuchsia-500',
+    iconBg: 'bg-primary-50 dark:bg-primary-500/10',
+    iconText: 'text-primary-600 dark:text-primary-400',
+    gradient: 'from-primary-500 to-sky-500',
+    shadow: 'shadow-primary-500/30',
+    ring: 'ring-primary-500',
+    dot: 'bg-primary-500',
   },
 };
 
@@ -295,7 +295,7 @@ export function SideNav({ mobileOpen, onClose }: Props) {
               </button>
               <button
                 onClick={confirmExit}
-                className="flex-1 px-4 py-3 rounded-2xl bg-rose-500 text-white font-bold text-sm hover:bg-rose-600 transition-colors shadow-md shadow-rose-500/30"
+                className="flex-1 px-4 py-3 rounded-2xl bg-lives-500 text-white font-bold text-sm hover:bg-lives-600 transition-colors shadow-md shadow-lives-500/30"
               >
                 {t('games.exitGame', "Chiqish")}
               </button>
@@ -320,13 +320,13 @@ export function SideNav({ mobileOpen, onClose }: Props) {
               onClick={(e) => handleNav('/', e as any)}
               className="flex items-center gap-2.5 min-w-0 flex-1 group text-left"
             >
-              <span className="relative inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-violet-500 to-fuchsia-500 text-white shadow-lg shadow-indigo-500/30 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+              <span className="relative inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 via-primary-600 to-sky-500 text-white shadow-lg shadow-primary-500/30 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
                   <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
                 </svg>
                 {/* subtle pulse ring */}
-                <span className="absolute inset-0 rounded-xl ring-2 ring-indigo-500/30 animate-pulse-ring" />
+                <span className="absolute inset-0 rounded-xl ring-2 ring-primary-500/30 animate-pulse-ring" />
               </span>
               <span
                 className={`flex flex-col min-w-0 transition-all duration-300 overflow-hidden ${
@@ -402,7 +402,7 @@ export function SideNav({ mobileOpen, onClose }: Props) {
                   }`}
                 >
                   <div className="relative flex-shrink-0">
-                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 via-violet-500 to-fuchsia-500 text-white flex items-center justify-center text-sm font-bold shadow-md">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary-500 via-primary-600 to-sky-500 text-white flex items-center justify-center text-sm font-bold shadow-md">
                       {user.username[0]?.toUpperCase()}
                     </div>
                     <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900" />
@@ -418,7 +418,7 @@ export function SideNav({ mobileOpen, onClose }: Props) {
                   <button
                     onClick={handleLogout}
                     title={t('nav.logout')}
-                    className="flex-shrink-0 inline-flex items-center justify-center w-8 h-8 rounded-lg text-slate-400 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-500/15 dark:hover:text-rose-400 transition-all duration-200 hover:scale-110 active:scale-95"
+                    className="flex-shrink-0 inline-flex items-center justify-center w-8 h-8 rounded-lg text-slate-400 hover:bg-lives-50 hover:text-lives-600 dark:hover:bg-lives-500/15 dark:hover:text-lives-400 transition-all duration-200 hover:scale-110 active:scale-95"
                     aria-label="logout"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -432,7 +432,7 @@ export function SideNav({ mobileOpen, onClose }: Props) {
                 {/* Collapsed avatar + logout (desktop only) */}
                 <div className={`hidden ${collapsed ? 'lg:flex' : ''} flex-col items-center gap-2`}>
                   <div className="relative">
-                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 via-violet-500 to-fuchsia-500 text-white flex items-center justify-center text-sm font-bold shadow-md">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary-500 via-primary-600 to-sky-500 text-white flex items-center justify-center text-sm font-bold shadow-md">
                       {user.username[0]?.toUpperCase()}
                     </div>
                     <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900" />
@@ -440,7 +440,7 @@ export function SideNav({ mobileOpen, onClose }: Props) {
                   <button
                     onClick={handleLogout}
                     title={t('nav.logout')}
-                    className="inline-flex items-center justify-center w-9 h-9 rounded-xl text-slate-400 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-500/15 dark:hover:text-rose-400 transition-all duration-200 hover:scale-110 active:scale-95"
+                    className="inline-flex items-center justify-center w-9 h-9 rounded-xl text-slate-400 hover:bg-lives-50 hover:text-lives-600 dark:hover:bg-lives-500/15 dark:hover:text-lives-400 transition-all duration-200 hover:scale-110 active:scale-95"
                     aria-label="logout"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

@@ -13,7 +13,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(function Input(
     <div>
       {label && <label className="label">{label}</label>}
       <input ref={ref} className={`input ${className}`} {...rest} />
-      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
+      {error && <p className="mt-1.5 text-xs font-bold text-lives-500">{error}</p>}
     </div>
   );
 });

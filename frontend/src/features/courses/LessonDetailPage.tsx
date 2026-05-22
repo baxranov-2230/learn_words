@@ -19,14 +19,14 @@ function lessonState(l: LessonStatus): LessonState {
 }
 
 const STATE_BG: Record<LessonState, string> = {
-  locked: 'from-rose-500 to-pink-600',
-  pending: 'from-rose-500 to-pink-600',
-  inprogress: 'from-amber-500 to-orange-600',
-  passed: 'from-emerald-500 to-teal-600',
+  locked: 'from-lives-500 to-lives-600',
+  pending: 'from-primary-500 to-primary-600',
+  inprogress: 'from-streak-500 to-streak-600',
+  passed: 'from-success-500 to-success-600',
 };
 
 const GAMES: Array<{
-  key: 'flashcards' | 'test' | 'match' | 'spelling' | 'gravity';
+  key: 'flashcards' | 'test' | 'match' | 'spelling' | 'scramble';
   labelKey: string;
   descKey: string;
   gradient: string;
@@ -37,7 +37,7 @@ const GAMES: Array<{
     key: 'test',
     labelKey: 'games.test',
     descKey: 'lesson.gameTestDesc',
-    gradient: 'from-primary-500 to-violet-600',
+    gradient: 'from-primary-500 to-primary-600',
     primary: true,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -50,7 +50,7 @@ const GAMES: Array<{
     key: 'match',
     labelKey: 'games.match',
     descKey: 'lesson.gameMatchDesc',
-    gradient: 'from-emerald-500 to-teal-600',
+    gradient: 'from-success-500 to-success-600',
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="3" width="7" height="7" rx="1.5" />
@@ -64,7 +64,7 @@ const GAMES: Array<{
     key: 'spelling',
     labelKey: 'games.spelling',
     descKey: 'lesson.gameSpellingDesc',
-    gradient: 'from-sky-500 to-blue-600',
+    gradient: 'from-sky-500 to-primary-600',
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
@@ -73,15 +73,17 @@ const GAMES: Array<{
     ),
   },
   {
-    key: 'gravity',
-    labelKey: 'games.gravity',
-    descKey: 'lesson.gameGravityDesc',
-    gradient: 'from-rose-500 to-pink-600',
+    key: 'scramble',
+    labelKey: 'games.scramble',
+    descKey: 'lesson.gameScrambleDesc',
+    gradient: 'from-streak-500 to-lives-500',
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" />
-        <line x1="12" y1="8" x2="12" y2="12" />
-        <line x1="12" y1="16" x2="12.01" y2="16" />
+        <rect x="3" y="3" width="5" height="5" rx="1" />
+        <rect x="3" y="16" width="5" height="5" rx="1" />
+        <rect x="16" y="3" width="5" height="5" rx="1" />
+        <rect x="16" y="16" width="5" height="5" rx="1" />
+        <path d="M8 5.5h8M8 18.5h8M5.5 8v8M18.5 8v8" strokeDasharray="2 2" />
       </svg>
     ),
   },
@@ -133,8 +135,8 @@ export function LessonDetailPage() {
 
   if (lesson.locked) {
     return (
-      <div className="rounded-2xl bg-white dark:bg-slate-800 border border-rose-200 dark:border-rose-500/30 p-8 sm:p-12 text-center max-w-2xl mx-auto animate-fade-in-up">
-        <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-rose-500 to-pink-600 text-white shadow-lg shadow-rose-500/30 mb-4">
+      <div className="card border-lives-200 dark:border-lives-500/30 p-8 sm:p-12 text-center max-w-2xl mx-auto animate-fade-in-up">
+        <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-lives-500 to-lives-600 text-white shadow-lg shadow-lives-500/30 mb-4">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
@@ -220,8 +222,8 @@ export function LessonDetailPage() {
       </div>
 
       {/* Steps tip */}
-      <div className="rounded-2xl bg-gradient-to-r from-primary-50 via-violet-50 to-fuchsia-50 dark:from-primary-500/10 dark:via-violet-500/10 dark:to-fuchsia-500/10 border border-primary-200/50 dark:border-primary-500/20 p-4 flex items-start gap-3 animate-fade-in-up stagger-1">
-        <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 via-violet-500 to-fuchsia-500 text-white shadow-md flex-shrink-0">
+      <div className="rounded-3xl bg-primary-50 dark:bg-primary-500/10 border-2 border-primary-200 dark:border-primary-500/30 p-4 flex items-start gap-3 animate-fade-in-up stagger-1">
+        <span className="inline-flex items-center justify-center w-10 h-10 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-md flex-shrink-0">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10" />
             <path d="M12 16v-4" />
@@ -229,8 +231,10 @@ export function LessonDetailPage() {
           </svg>
         </span>
         <div className="text-sm">
-          <div className="font-semibold mb-0.5">{t('lesson.flowTitle')}</div>
-          <div className="text-slate-600 dark:text-slate-300">
+          <div className="font-extrabold mb-0.5 text-slate-900 dark:text-slate-100">
+            {t('lesson.flowTitle')}
+          </div>
+          <div className="font-semibold text-slate-600 dark:text-slate-300">
             {t('lesson.flowHint')}
           </div>
         </div>
@@ -242,7 +246,7 @@ export function LessonDetailPage() {
           number={1}
           title={t('lesson.stepWords')}
           subtitle={t('lesson.stepWordsHint')}
-          gradient="from-emerald-500 to-teal-600"
+          gradient="from-success-500 to-success-600"
           icon={
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M2 7l10-5 10 5-10 5L2 7z" />
@@ -277,7 +281,7 @@ export function LessonDetailPage() {
           number={lesson.deck_id ? 2 : 1}
           title={t('lesson.stepStory')}
           subtitle={t('lesson.stepStoryHint')}
-          gradient="from-amber-500 to-orange-600"
+          gradient="from-primary-500 to-sky-500"
           icon={
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
@@ -305,7 +309,7 @@ export function LessonDetailPage() {
           number={lesson.deck_id && lesson.story_id ? 3 : lesson.deck_id ? 2 : 1}
           title={t('lesson.stepGames')}
           subtitle={t('lesson.stepGamesHint')}
-          gradient="from-primary-500 via-violet-500 to-fuchsia-500"
+          gradient="from-primary-500 to-sky-500"
           icon={
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="6" y1="11" x2="10" y2="11" />
@@ -328,7 +332,7 @@ export function LessonDetailPage() {
                 } p-4 hover:-translate-y-0.5 hover:shadow-lg transition-all animate-fade-in-up stagger-${(i % 6) + 1}`}
               >
                 {g.primary && (
-                  <span className="absolute top-2 right-2 text-[9px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded bg-gradient-to-r from-primary-500 to-violet-600 text-white shadow-sm">
+                  <span className="absolute top-2 right-2 text-[9px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-sm">
                     {t('lesson.scoresLesson')}
                   </span>
                 )}
@@ -353,7 +357,7 @@ export function LessonDetailPage() {
           number={(lesson.deck_id ? 1 : 0) + (lesson.story_id ? 1 : 0) + (lesson.deck_id ? 1 : 0) + 1}
           title={t('lesson.stepQuiz', 'Imtihon')}
           subtitle={t('lesson.stepQuizHint', "Bilimingizni sinab ko'ring va darsni yakunlang")}
-          gradient="from-indigo-600 via-violet-600 to-primary-600"
+          gradient="from-primary-600 to-primary-700"
           icon={
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
@@ -376,7 +380,7 @@ export function LessonDetailPage() {
                   playGame('test');
                 }
               }}
-              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-extrabold text-lg shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/40 hover:-translate-y-1 transition-all active:scale-95"
+              className="btn-3d-primary btn-3d-lg"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
@@ -385,7 +389,7 @@ export function LessonDetailPage() {
               {t('reader.startQuiz', "Imtihonni boshlash")}
             </button>
             {lesson.attempts > 0 && (
-              <div className={`mt-4 px-4 py-2 rounded-full text-xs font-bold ${lesson.passed ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}`}>
+              <div className={`mt-4 px-4 py-2 rounded-2xl text-xs font-extrabold uppercase tracking-wider ${lesson.passed ? 'bg-success-100 text-success-700 dark:bg-success-500/15 dark:text-success-400' : 'bg-lives-100 text-lives-700 dark:bg-lives-500/15 dark:text-lives-400'}`}>
                 {lesson.passed ? t('courses.state.passed') : t('courses.tryAgain')}
               </div>
             )}
@@ -413,24 +417,24 @@ function Step({
 }) {
   return (
     <section
-      className={`rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden animate-fade-in-up stagger-${(number % 6) + 1}`}
+      className={`card overflow-hidden p-0 animate-fade-in-up stagger-${(number % 6) + 1}`}
     >
-      <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-700 flex items-center gap-3">
+      <div className="px-5 py-4 border-b-2 border-slate-100 dark:border-slate-800 flex items-center gap-3">
         <span
-          className={`inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br ${gradient} text-white shadow-md`}
+          className={`inline-flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br ${gradient} text-white shadow-md`}
         >
           {icon}
         </span>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">
               {number}-bosqich
             </span>
           </div>
-          <h2 className="font-bold text-base sm:text-lg leading-tight">
+          <h2 className="font-extrabold text-base sm:text-lg leading-tight text-slate-900 dark:text-slate-100">
             {title}
           </h2>
-          <p className="text-xs text-slate-500 mt-0.5">{subtitle}</p>
+          <p className="text-xs font-semibold text-slate-500 mt-0.5">{subtitle}</p>
         </div>
       </div>
       <div className="p-5">{children}</div>
@@ -498,7 +502,7 @@ function WordCard({
     <button
       type="button"
       onClick={() => setFlipped((v) => !v)}
-      className={`group relative h-24 rounded-xl bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 hover:border-emerald-300 dark:hover:border-emerald-500/40 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 text-left overflow-hidden animate-fade-in-up stagger-${(index % 6) + 1}`}
+      className={`group relative h-24 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 hover:border-success-400 dark:hover:border-success-500 transition-all duration-200 hover:-translate-y-0.5 text-left overflow-hidden animate-fade-in-up stagger-${(index % 6) + 1}`}
     >
       <span className="absolute top-2 right-2 text-[10px] font-bold text-slate-300 dark:text-slate-600 tabular-nums">
         {index + 1}
@@ -521,7 +525,7 @@ function WordCard({
             <div className="text-xs text-slate-400 uppercase tracking-wider font-semibold">
               {card.term}
             </div>
-            <div className="font-semibold text-sm text-emerald-700 dark:text-emerald-300 mt-0.5 line-clamp-2">
+            <div className="font-extrabold text-sm text-success-700 dark:text-success-400 mt-0.5 line-clamp-2">
               {card.definition}
             </div>
           </div>
@@ -547,14 +551,14 @@ function StoryPreview({
   const { t } = useTranslation();
   const preview = content.length > 220 ? content.slice(0, 220) + '…' : content;
   return (
-    <div className="rounded-xl border border-amber-200 dark:border-amber-500/30 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-500/10 dark:to-orange-500/5 p-5">
-      <h3 className="font-bold text-lg">{title}</h3>
-      <p className="text-sm text-slate-700 dark:text-slate-300 mt-2 leading-relaxed whitespace-pre-line">
+    <div className="rounded-2xl border-2 border-primary-200 dark:border-primary-500/30 bg-primary-50 dark:bg-primary-500/10 p-5">
+      <h3 className="font-extrabold text-lg text-slate-900 dark:text-slate-100">{title}</h3>
+      <p className="text-sm font-semibold text-slate-700 dark:text-slate-300 mt-2 leading-relaxed whitespace-pre-line">
         {preview}
       </p>
       <Link
         to={`/stories/${storyId}?lesson=${lessonId}&course=${courseId}`}
-        className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-amber-700 dark:text-amber-300 hover:underline"
+        className="inline-flex items-center gap-1.5 mt-4 text-sm font-extrabold uppercase tracking-wider text-primary-700 dark:text-primary-400 hover:underline"
       >
         {t('lesson.readStory')}
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

@@ -37,8 +37,8 @@ function OverviewPanel() {
     {
       title: t('admin.overview.manageUsers'),
       desc: t('admin.overview.manageUsersDesc'),
-      gradient: 'from-indigo-500 to-violet-600',
-      bg: 'from-indigo-500/10 to-violet-600/5',
+      gradient: 'from-primary-500 to-primary-600',
+      bg: 'from-primary-500/10 to-primary-600/5',
       icon: (
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />

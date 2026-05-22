@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { gamesApi } from '@/api/games';
 import { progressApi } from '@/api/progress';
@@ -20,6 +20,7 @@ export function FlashcardsPage() {
   });
 
   const items = (data?.items ?? []) as FlashcardItem[];
+  const queryClient = useQueryClient();
   const [idx, setIdx] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [correct, setCorrect] = useState(0);
@@ -54,7 +55,10 @@ export function FlashcardsPage() {
     if (!card) return;
     if (quality >= 3) setCorrect((c) => c + 1);
     else setIncorrect((c) => c + 1);
-    progressApi.review({ card_id: card.card_id, quality }).catch(() => {});
+    progressApi.review({ card_id: card.card_id, quality, source: 'flashcard' }).then(() => {
+      queryClient.invalidateQueries({ queryKey: ['progress', 'weak'] });
+      queryClient.invalidateQueries({ queryKey: ['progress', 'me'] });
+    }).catch(() => {});
     setFlipped(false);
     if (idx + 1 >= items.length) {
       setDone(true);
@@ -113,8 +117,8 @@ export function FlashcardsPage() {
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
             {correct}
           </span>
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300">
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-lives-100 text-lives-700 dark:bg-lives-500/15 dark:text-lives-300">
+            <span className="w-1.5 h-1.5 rounded-full bg-lives-500" />
             {incorrect}
           </span>
         </div>
@@ -165,7 +169,7 @@ export function FlashcardsPage() {
           </div>
 
           {/* Back */}
-          <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-3xl bg-gradient-to-br from-primary-500 via-violet-500 to-fuchsia-500 text-white shadow-2xl shadow-violet-500/30 p-8 flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-3xl bg-gradient-to-br from-primary-500 via-primary-500 to-sky-500 text-white shadow-2xl shadow-primary-500/30 p-8 flex items-center justify-center overflow-hidden">
             <div className="pointer-events-none absolute -top-16 -right-16 w-48 h-48 rounded-full bg-white/15 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-12 -left-12 w-40 h-40 rounded-full bg-white/10 blur-2xl" />
             <div className="relative text-center">
@@ -184,7 +188,7 @@ export function FlashcardsPage() {
       <div className="grid grid-cols-2 gap-3">
         <button
           onClick={() => rate(2)}
-          className="group inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-600 text-white font-bold shadow-lg shadow-rose-500/25 hover:-translate-y-0.5 active:scale-95 transition-all"
+          className="group inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl bg-gradient-to-br from-lives-500 to-pink-600 text-white font-bold shadow-lg shadow-lives-500/25 hover:-translate-y-0.5 active:scale-95 transition-all"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-translate-x-1 transition-transform">
             <line x1="19" y1="12" x2="5" y2="12" />
@@ -246,7 +250,7 @@ function ResultScreen({
         className={`relative overflow-hidden rounded-3xl text-white p-8 sm:p-10 text-center bg-gradient-to-br ${
           passed
             ? 'from-emerald-500 via-teal-500 to-cyan-600'
-            : 'from-amber-500 via-orange-500 to-rose-500'
+            : 'from-amber-500 via-orange-500 to-lives-500'
         }`}
       >
         <div className="pointer-events-none absolute -top-16 -right-16 w-48 h-48 rounded-full bg-white/20 blur-3xl animate-float-slow" />
@@ -265,7 +269,7 @@ function ResultScreen({
             </span>
             <span className="text-white/40">|</span>
             <span className="inline-flex items-center gap-1.5 font-semibold">
-              <span className="w-2 h-2 rounded-full bg-rose-300" />
+              <span className="w-2 h-2 rounded-full bg-lives-300" />
               {incorrect}
             </span>
           </div>

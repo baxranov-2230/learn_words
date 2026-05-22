@@ -118,7 +118,7 @@ export function LanguagesAdmin() {
                         if (confirm(t('admin.languages.deleteConfirm'))) removeMut.mutate(l.id);
                       }}
                       title={t('common.delete')}
-                      className="inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-400 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-500/10 transition-all"
+                      className="inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-400 hover:bg-lives-50 hover:text-lives-600 dark:hover:bg-lives-500/10 transition-all"
                     >
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M3 6h18" />

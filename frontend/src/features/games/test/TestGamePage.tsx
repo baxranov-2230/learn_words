@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { gamesApi } from '@/api/games';
 import { lessonsApi } from '@/api/lessons';
@@ -11,12 +11,12 @@ import type { LessonAttemptResult, TestQuestion } from '@/types';
 
 const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
 const OPTION_COLORS = [
-  'from-indigo-500 to-violet-600',
+  'from-primary-500 to-primary-600',
   'from-emerald-500 to-teal-600',
   'from-amber-500 to-orange-600',
-  'from-rose-500 to-pink-600',
+  'from-lives-500 to-pink-600',
   'from-sky-500 to-blue-600',
-  'from-fuchsia-500 to-purple-600',
+  'from-sky-500 to-purple-600',
 ];
 
 export function TestGamePage() {
@@ -35,6 +35,7 @@ export function TestGamePage() {
     enabled: !!deckId,
   });
   const questions = (data?.items ?? []) as TestQuestion[];
+  const queryClient = useQueryClient();
 
   const [idx, setIdx] = useState(0);
   const [picked, setPicked] = useState<string | null>(null);
@@ -66,7 +67,7 @@ export function TestGamePage() {
           className={`relative overflow-hidden rounded-3xl text-white p-8 sm:p-10 text-center bg-gradient-to-br ${
             passed
               ? 'from-emerald-500 via-teal-500 to-cyan-600'
-              : 'from-rose-500 via-pink-500 to-fuchsia-600'
+              : 'from-lives-500 via-pink-500 to-sky-500'
           }`}
         >
           <div className="pointer-events-none absolute -top-16 -right-16 w-48 h-48 rounded-full bg-white/20 blur-3xl animate-float-slow" />
@@ -94,7 +95,7 @@ export function TestGamePage() {
               </span>
               <span className="text-white/40">|</span>
               <span className="inline-flex items-center gap-1.5 font-semibold">
-                <span className="w-2 h-2 rounded-full bg-rose-300" />
+                <span className="w-2 h-2 rounded-full bg-lives-300" />
                 {incorrect}
               </span>
             </div>
@@ -152,7 +153,11 @@ export function TestGamePage() {
     if (isCorrect) setCorrect((c) => c + 1);
     else setIncorrect((c) => c + 1);
     progressApi
-      .review({ card_id: q.card_id, quality: isCorrect ? 5 : 2 })
+      .review({ card_id: q.card_id, quality: isCorrect ? 5 : 2, source: 'test' })
+      .then(() => {
+        queryClient.invalidateQueries({ queryKey: ['progress', 'weak'] });
+        queryClient.invalidateQueries({ queryKey: ['progress', 'me'] });
+      })
       .catch(() => {});
 
     setTimeout(() => {
@@ -203,8 +208,8 @@ export function TestGamePage() {
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
             {correct}
           </span>
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300">
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-lives-100 text-lives-700 dark:bg-lives-500/15 dark:text-lives-300">
+            <span className="w-1.5 h-1.5 rounded-full bg-lives-500" />
             {incorrect}
           </span>
         </div>
@@ -213,7 +218,7 @@ export function TestGamePage() {
       {/* Progress bar */}
       <div className="h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-primary-500 via-violet-500 to-fuchsia-500 transition-all duration-500"
+          className="h-full bg-gradient-to-r from-primary-500 via-primary-500 to-sky-500 transition-all duration-500"
           style={{ width: `${progressPct}%` }}
         />
       </div>
@@ -221,7 +226,7 @@ export function TestGamePage() {
       {/* Question */}
       <div
         key={idx}
-        className="animate-fade-in-up rounded-3xl bg-gradient-to-br from-primary-500 via-violet-500 to-fuchsia-500 text-white p-8 sm:p-10 text-center shadow-xl shadow-violet-500/20 relative overflow-hidden"
+        className="animate-fade-in-up rounded-3xl bg-gradient-to-br from-primary-500 via-primary-500 to-sky-500 text-white p-8 sm:p-10 text-center shadow-xl shadow-primary-500/20 relative overflow-hidden"
       >
         <div className="pointer-events-none absolute -top-12 -right-12 w-40 h-40 rounded-full bg-white/15 blur-2xl" />
         <div className="relative">
@@ -249,7 +254,7 @@ export function TestGamePage() {
                 isCorrect
                   ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-500/15 text-emerald-900 dark:text-emerald-100 scale-[1.02]'
                   : isWrong
-                  ? 'border-rose-500 bg-rose-50 dark:bg-rose-500/15 text-rose-900 dark:text-rose-100'
+                  ? 'border-lives-500 bg-lives-50 dark:bg-lives-500/15 text-lives-900 dark:text-lives-100'
                   : isPicked
                   ? 'border-primary-500 bg-primary-50 dark:bg-primary-500/15'
                   : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-primary-300 dark:hover:border-primary-500/50 hover:-translate-y-0.5 hover:shadow-md'
@@ -260,7 +265,7 @@ export function TestGamePage() {
                   isCorrect
                     ? 'from-emerald-500 to-teal-600'
                     : isWrong
-                    ? 'from-rose-500 to-pink-600'
+                    ? 'from-lives-500 to-pink-600'
                     : OPTION_COLORS[i % OPTION_COLORS.length]
                 } shadow-md`}
               >

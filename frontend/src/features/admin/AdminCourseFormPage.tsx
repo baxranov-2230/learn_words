@@ -191,7 +191,7 @@ export function AdminCourseFormPage() {
             </div>
             <span
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
-                isPublished ? 'bg-gradient-to-r from-primary-500 to-violet-600' : 'bg-slate-300 dark:bg-slate-600'
+                isPublished ? 'bg-gradient-to-r from-primary-500 to-primary-600' : 'bg-slate-300 dark:bg-slate-600'
               }`}
               onClick={() => setIsPublished(!isPublished)}
             >

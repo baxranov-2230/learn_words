@@ -153,7 +153,7 @@ export function StoryReaderPage() {
         <span
           key={key}
           data-word
-          className="relative inline cursor-pointer text-amber-700 dark:text-amber-300 font-semibold rounded-md px-0.5 -mx-0.5 hover:bg-amber-100 dark:hover:bg-amber-500/20 hover:shadow-sm transition-colors decoration-amber-400/60 decoration-2 decoration-dotted underline underline-offset-4"
+          className="relative inline cursor-pointer text-primary-700 dark:text-primary-300 font-semibold rounded-md px-0.5 -mx-0.5 hover:bg-primary-100 dark:hover:bg-primary-500/20 hover:shadow-sm transition-colors decoration-primary-400/60 decoration-2 decoration-dotted underline underline-offset-4"
           onClick={(e) => {
             e.stopPropagation();
             setTooltip({
@@ -179,7 +179,7 @@ export function StoryReaderPage() {
       {/* Top reading progress bar */}
       <div className="fixed top-0 left-0 right-0 z-40 h-1 bg-slate-200/40 dark:bg-slate-800/40">
         <div
-          className="h-full bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 transition-all duration-200"
+          className="h-full bg-gradient-to-r from-primary-400 via-primary-500 to-lives-500 transition-all duration-200"
           style={{ width: `${readPct}%` }}
         />
       </div>
@@ -189,7 +189,7 @@ export function StoryReaderPage() {
         <div className="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-2.5 sm:p-3 flex items-center gap-2 sm:gap-3 animate-fade-in-up shadow-sm">
           <button
             onClick={() => handleBackClick(`/courses/${course.id}/lessons/${lesson.id}`)}
-            className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-amber-500 hover:text-white transition-all duration-200 hover:scale-110 active:scale-95 flex-shrink-0"
+            className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-primary-500 hover:text-white transition-all duration-200 hover:scale-110 active:scale-95 flex-shrink-0"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="19" y1="12" x2="5" y2="12" />
@@ -226,7 +226,7 @@ export function StoryReaderPage() {
               <span className="truncate">{lesson.title}</span>
             </button>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-300 dark:text-slate-600"><polyline points="9 18 15 12 9 6" /></svg>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-white text-[11px] sm:text-xs font-bold bg-gradient-to-r from-amber-500 to-orange-600 shadow-sm flex-shrink-0">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-white text-[11px] sm:text-xs font-bold bg-gradient-to-r from-primary-500 to-primary-600 shadow-sm flex-shrink-0">
               <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse" />
               {story.title}
             </span>
@@ -250,7 +250,7 @@ export function StoryReaderPage() {
 
 
       {/* Hero */}
-      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-amber-500 via-orange-500 to-rose-500 text-white p-5 sm:p-7 lg:p-8 animate-fade-in-up">
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-primary-500 via-primary-500 to-lives-500 text-white p-5 sm:p-7 lg:p-8 animate-fade-in-up">
         <div className="pointer-events-none absolute -top-20 -right-20 w-64 h-64 rounded-full bg-white/15 blur-3xl animate-float-slow" />
         <div
           className="pointer-events-none absolute -bottom-16 -left-16 w-56 h-56 rounded-full bg-white/10 blur-3xl animate-float-slow"
@@ -336,7 +336,7 @@ export function StoryReaderPage() {
               onClick={() => setFontSize(s)}
               className={`inline-flex items-center justify-center w-8 h-8 rounded-lg font-extrabold transition-all ${
                 fontSize === s
-                  ? 'bg-white dark:bg-slate-700 text-amber-600 dark:text-amber-400 shadow-sm'
+                  ? 'bg-white dark:bg-slate-700 text-primary-600 dark:text-primary-400 shadow-sm'
                   : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-200'
               } ${
                 s === 'sm' ? 'text-[11px]' : s === 'md' ? 'text-sm' : 'text-base'
@@ -355,7 +355,7 @@ export function StoryReaderPage() {
         className="relative rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm p-5 sm:p-8 lg:p-12 animate-fade-in-up stagger-1"
       >
         {/* Decorative quote mark */}
-        <span className="absolute top-4 right-5 text-7xl sm:text-9xl text-amber-100 dark:text-amber-500/10 font-serif leading-none select-none pointer-events-none">
+        <span className="absolute top-4 right-5 text-7xl sm:text-9xl text-primary-100 dark:text-primary-500/10 font-serif leading-none select-none pointer-events-none">
           &ldquo;
         </span>
         
@@ -382,7 +382,7 @@ export function StoryReaderPage() {
       {story.words.length > 0 && (
         <section className="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden animate-fade-in-up stagger-2">
           <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-700 flex items-center gap-3">
-            <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-md">
+            <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-md">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 6.253v13M5 19h7a4 4 0 0 1 4-4V4a4 4 0 0 0-4-4H5z" />
               </svg>
@@ -403,16 +403,16 @@ export function StoryReaderPage() {
             {story.words.map((w, i) => (
               <li
                 key={w.id}
-                className={`px-4 sm:px-5 py-3 flex items-start gap-3 bg-white dark:bg-slate-800 hover:bg-amber-50/50 dark:hover:bg-amber-500/5 transition-colors animate-fade-in-up stagger-${(i % 6) + 1}`}
+                className={`px-4 sm:px-5 py-3 flex items-start gap-3 bg-white dark:bg-slate-800 hover:bg-primary-50/50 dark:hover:bg-primary-500/5 transition-colors animate-fade-in-up stagger-${(i % 6) + 1}`}
               >
-                <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 mt-1 tabular-nums w-6 flex-shrink-0">
+                <span className="text-[10px] font-bold text-primary-600 dark:text-primary-400 mt-1 tabular-nums w-6 flex-shrink-0">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <div className="flex-1 min-w-0">
                   <div className="font-bold text-slate-900 dark:text-slate-100">
                     {w.word}
                   </div>
-                  <div className="text-sm text-amber-700 dark:text-amber-300 font-medium mt-0.5">
+                  <div className="text-sm text-primary-700 dark:text-primary-300 font-medium mt-0.5">
                     {w.translation}
                   </div>
                   {w.note && (
@@ -441,8 +441,8 @@ export function StoryReaderPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 rounded-2xl bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-600 dark:text-amber-400">
+              <div className="w-16 h-16 rounded-2xl bg-primary-100 dark:bg-primary-500/20 flex items-center justify-center">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary-600 dark:text-primary-400">
                   <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
                   <line x1="12" y1="9" x2="12" y2="13" />
                   <line x1="12" y1="17" x2="12.01" y2="17" />
@@ -464,7 +464,7 @@ export function StoryReaderPage() {
               </button>
               <button
                 onClick={() => navigate(exitTarget)}
-                className="flex-1 px-4 py-3 rounded-2xl bg-rose-500 text-white font-bold text-sm hover:bg-rose-600 transition-colors shadow-md shadow-rose-500/30"
+                className="flex-1 px-4 py-3 rounded-2xl bg-lives-500 text-white font-bold text-sm hover:bg-lives-600 transition-colors shadow-md shadow-lives-500/30"
               >
                 {t('reader.exitConfirm', "Chiqish")}
               </button>
@@ -550,15 +550,15 @@ function CustomAudioPlayer({ src }: { src: string }) {
   };
 
   return (
-    <div className="mb-8 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-amber-50/50 dark:from-slate-800 dark:to-slate-800/80 border border-amber-100 dark:border-slate-700 shadow-sm relative overflow-hidden group">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-400/20 to-orange-500/20 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none transition-opacity duration-700 opacity-50 group-hover:opacity-100" />
+    <div className="mb-8 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-primary-50/50 dark:from-slate-800 dark:to-slate-800/80 border border-primary-100 dark:border-slate-700 shadow-sm relative overflow-hidden group">
+      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary-400/20 to-primary-500/20 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none transition-opacity duration-700 opacity-50 group-hover:opacity-100" />
       
       <audio ref={audioRef} src={src} preload="metadata" />
       
       <div className="relative z-10 flex items-center gap-3 sm:gap-5">
         <button
           onClick={togglePlay}
-          className="flex-shrink-0 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-md hover:shadow-lg hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+          className="flex-shrink-0 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-md hover:shadow-lg hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
         >
           {isPlaying ? (
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -589,13 +589,13 @@ function CustomAudioPlayer({ src }: { src: string }) {
             />
             <div className="w-full h-2 bg-slate-200/80 dark:bg-slate-700/80 rounded-full overflow-hidden relative z-10 pointer-events-none shadow-inner">
               <div
-                className="h-full bg-gradient-to-r from-amber-400 to-orange-500 transition-all duration-75 ease-linear"
+                className="h-full bg-gradient-to-r from-primary-400 to-primary-500 transition-all duration-75 ease-linear"
                 style={{ width: `${progress}%` }}
               />
             </div>
             {/* Slider thumb */}
             <div 
-              className="absolute h-4 w-4 bg-white border-[3px] border-orange-500 rounded-full shadow-md z-10 pointer-events-none transition-transform group-hover/slider:scale-125"
+              className="absolute h-4 w-4 bg-white border-[3px] border-primary-500 rounded-full shadow-md z-10 pointer-events-none transition-transform group-hover/slider:scale-125"
               style={{ left: `calc(${progress}% - 8px)` }}
             />
           </div>
@@ -606,7 +606,7 @@ function CustomAudioPlayer({ src }: { src: string }) {
             value={speed}
             onChange={changeSpeed}
             title="Play speed"
-            className="appearance-none flex-shrink-0 min-w-[4.5rem] h-10 pl-3 pr-7 rounded-xl bg-white/80 dark:bg-slate-700/80 backdrop-blur-sm border border-amber-200/50 dark:border-slate-600 text-sm font-bold text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-slate-600 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500/50 cursor-pointer"
+            className="appearance-none flex-shrink-0 min-w-[4.5rem] h-10 pl-3 pr-7 rounded-xl bg-white/80 dark:bg-slate-700/80 backdrop-blur-sm border border-primary-200/50 dark:border-slate-600 text-sm font-bold text-primary-700 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-slate-600 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500/50 cursor-pointer"
           >
             <option value={0.5}>0.5x</option>
             <option value={0.75}>0.75x</option>
@@ -615,7 +615,7 @@ function CustomAudioPlayer({ src }: { src: string }) {
             <option value={1.5}>1.5x</option>
             <option value={2}>2.0x</option>
           </select>
-          <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-amber-700 dark:text-amber-400">
+          <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-primary-700 dark:text-primary-400">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="6 9 12 15 18 9" />
             </svg>
@@ -686,8 +686,8 @@ function WordTooltip({
       className="fixed z-50 max-w-xs animate-scale-in"
       style={{ left: pos.left, top: pos.top }}
     >
-      <div className="rounded-2xl bg-white dark:bg-slate-800 border border-amber-200 dark:border-amber-500/30 shadow-2xl shadow-slate-900/15 dark:shadow-black/40 overflow-hidden">
-        <div className="px-4 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white flex items-center justify-between gap-2">
+      <div className="rounded-2xl bg-white dark:bg-slate-800 border border-primary-200 dark:border-primary-500/30 shadow-2xl shadow-slate-900/15 dark:shadow-black/40 overflow-hidden">
+        <div className="px-4 py-2.5 bg-gradient-to-r from-primary-500 to-primary-600 text-white flex items-center justify-between gap-2">
           <span className="font-bold text-sm truncate">{data.word}</span>
           <button
             onClick={onClose}

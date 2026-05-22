@@ -14,6 +14,7 @@ from app.schemas.progress import (
     ProgressSummary,
     ReviewRequest,
     ReviewResponse,
+    WeakCard,
 )
 from app.services.srs import review as srs_review
 from app.services.streak import touch_streak
@@ -74,6 +75,10 @@ async def submit_review(
         progress.correct_count += 1
     else:
         progress.incorrect_count += 1
+        if data.source == 'test':
+            progress.test_incorrect += 1
+        else:
+            progress.flashcard_incorrect += 1
 
     await touch_streak(db, current.id)
     await db.commit()
@@ -170,3 +175,51 @@ async def my_progress(current: CurrentUser, db: DBSession) -> ProgressSummary:
         longest_streak=streak.longest_streak if streak else 0,
         last_activity_date=streak.last_activity_date if streak else None,
     )
+
+
+@router.get("/weak", response_model=list[WeakCard])
+async def get_weak_cards(
+    current: CurrentUser,
+    db: DBSession,
+    source: str | None = Query(default=None, pattern='^(flashcard|test)$'),
+    limit: int = Query(200, ge=1, le=500),
+) -> list[WeakCard]:
+    """Flashcard yoki test bo'yicha bilmaganlar."""
+    base = [
+        UserProgress.user_id == current.id,
+        UserProgress.mastery_level < 4,
+    ]
+    if source == 'flashcard':
+        base.append(UserProgress.flashcard_incorrect > 0)
+        order_col = UserProgress.flashcard_incorrect
+    elif source == 'test':
+        base.append(UserProgress.test_incorrect > 0)
+        order_col = UserProgress.test_incorrect
+    else:
+        base.append(UserProgress.incorrect_count > 0)
+        order_col = UserProgress.incorrect_count
+
+    stmt = (
+        select(Card, UserProgress)
+        .join(UserProgress, UserProgress.card_id == Card.id)
+        .where(*base)
+        .order_by(order_col.desc(), UserProgress.mastery_level.asc())
+        .limit(limit)
+    )
+    rows = (await db.execute(stmt)).all()
+    return [
+        WeakCard(
+            id=card.id,
+            deck_id=card.deck_id,
+            term=card.term,
+            definition=card.definition,
+            transcription=card.transcription,
+            mastery_level=prog.mastery_level,
+            incorrect_count=prog.incorrect_count,
+            correct_count=prog.correct_count,
+            flashcard_incorrect=prog.flashcard_incorrect,
+            test_incorrect=prog.test_incorrect,
+            last_reviewed_at=prog.last_reviewed_at,
+        )
+        for card, prog in rows
+    ]

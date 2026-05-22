@@ -13,13 +13,14 @@ import { FlashcardsPage } from '@/features/games/flashcards/FlashcardsPage';
 import { TestGamePage } from '@/features/games/test/TestGamePage';
 import { MatchGamePage } from '@/features/games/match/MatchGamePage';
 import { SpellingGamePage } from '@/features/games/spelling/SpellingGamePage';
-import { GravityGamePage } from '@/features/games/gravity/GravityGamePage';
+import { ScrambleGamePage } from '@/features/games/scramble/ScrambleGamePage';
 import { StoriesListPage } from '@/features/stories/StoriesListPage';
 import { StoryReaderPage } from '@/features/stories/StoryReaderPage';
 import { StoryQuizPage } from '@/features/stories/StoryQuizPage';
 import { CoursesListPage } from '@/features/courses/CoursesListPage';
 import { CourseDetailPage } from '@/features/courses/CourseDetailPage';
 import { LessonDetailPage } from '@/features/courses/LessonDetailPage';
+import { ProfilePage } from '@/features/profile/ProfilePage';
 import { AdminPage } from '@/features/admin/AdminPage';
 import { AdminLanguageFormPage } from '@/features/admin/AdminLanguageFormPage';
 import { AdminCourseFormPage } from '@/features/admin/AdminCourseFormPage';
@@ -37,6 +38,7 @@ export function AppRouter() {
 
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/stats" element={<StatsPage />} />
           <Route path="/decks" element={<DecksListPage />} />
           <Route path="/decks/new" element={<DeckEditorPage />} />
@@ -47,7 +49,7 @@ export function AppRouter() {
           <Route path="/decks/:id/play/test" element={<TestGamePage />} />
           <Route path="/decks/:id/play/match" element={<MatchGamePage />} />
           <Route path="/decks/:id/play/spelling" element={<SpellingGamePage />} />
-          <Route path="/decks/:id/play/gravity" element={<GravityGamePage />} />
+          <Route path="/decks/:id/play/scramble" element={<ScrambleGamePage />} />
           <Route path="/courses" element={<CoursesListPage />} />
           <Route path="/courses/:id" element={<CourseDetailPage />} />
           <Route

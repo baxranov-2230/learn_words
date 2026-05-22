@@ -12,6 +12,7 @@
     "stories": "Stories",
     "stats": "Stats",
     "admin": "Admin",
+    "profile": "Profile",
     "logout": "Log out",
     "login": "Log in",
     "register": "Sign up",
@@ -77,7 +78,7 @@
     "test": "Test",
     "match": "Match",
     "spelling": "Spelling",
-    "gravity": "Gravity",
+    "scramble": "Scramble",
     "start": "Start",
     "next": "Next",
     "iKnow": "I know",
@@ -103,6 +104,24 @@
     "roundComplete": "Round {{n}} done! 🎉",
     "loadingNext": "Loading next round...",
     "matchHint": "Match {{n}} pairs — then next round opens"
+  },
+  "profile": {
+    "streak": "Streak",
+    "days": "days",
+    "mastered": "Mastered",
+    "learning": "Learning",
+    "total": "Total",
+    "words": "words",
+    "weakWords": "Don't Know",
+    "weakTitle": "\"Don't Know\" word bank",
+    "weakDesc": "Words you marked \"Don't Know\" in flashcards are collected here",
+    "noWeakWords": "No \"Don't Know\" words yet — great job!",
+    "noSearchResults": "No results found",
+    "searchWords": "Search words...",
+    "masteryProgress": "Mastery progress",
+    "sortIncorrect": "Error count",
+    "sortMastery": "Mastery level",
+    "sortRecent": "Recently reviewed"
   },
   "stories": {
     "title": "Stories",
@@ -132,7 +151,14 @@
     "seeAll": "See all",
     "noCourses": "No courses yet",
     "allCaughtUp": "All caught up for today!",
-    "adminShortcuts": "Admin shortcuts"
+    "adminShortcuts": "Admin shortcuts",
+    "totalWords": "Total words",
+    "mastered": "Mastered",
+    "learning": "Learning",
+    "reviewDue": "Due for review",
+    "quickGames": "Quick games",
+    "recentStories": "Recent stories",
+    "publicDecks": "Public decks"
   },
   "admin": {
     "title": "Admin panel",
@@ -358,7 +384,7 @@
     "gameTestDesc": "Multiple choice. Score from this game counts toward the lesson.",
     "gameMatchDesc": "Match words with their translations.",
     "gameSpellingDesc": "Type the word from audio or prompt.",
-    "gameGravityDesc": "Speed game — answer before words fall."
+    "gameScrambleDesc": "Tap the shuffled letters in the right order to spell the word."
   },
   "courses": {
     "title": "Courses",

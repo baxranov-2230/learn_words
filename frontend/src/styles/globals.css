@@ -2,12 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Brand font — Nunito (Duolingo-style rounded) */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
 @layer base {
   html {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-family: 'Nunito', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   }
   body {
-    @apply min-h-screen antialiased;
+    @apply min-h-screen antialiased bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100;
   }
   *:focus-visible {
     @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-white dark:ring-offset-slate-900;
@@ -25,26 +28,122 @@
 }
 
 @layer components {
+  /* ----- Cards ----- */
   .card {
-    @apply rounded-2xl bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700;
+    @apply rounded-3xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800;
   }
+  .card-flat {
+    @apply rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800;
+  }
+
+  /* ----- 3D buttons (Duolingo-style) ----- */
+  .btn-3d {
+    @apply relative inline-flex items-center justify-center gap-2 select-none
+           rounded-2xl px-5 py-3 text-sm font-extrabold uppercase tracking-wide
+           transition-all duration-100
+           disabled:opacity-50 disabled:pointer-events-none
+           border-b-[4px] active:border-b-0 active:translate-y-[4px];
+    letter-spacing: 0.04em;
+  }
+  .btn-3d-primary {
+    @apply btn-3d bg-primary-500 text-white border-primary-700 hover:bg-primary-400 hover:border-primary-600;
+  }
+  .btn-3d-success {
+    @apply btn-3d bg-success-500 text-white border-success-700 hover:bg-success-400 hover:border-success-600;
+  }
+  .btn-3d-danger {
+    @apply btn-3d bg-lives-500 text-white border-lives-700 hover:bg-lives-400 hover:border-lives-600;
+  }
+  .btn-3d-warning {
+    @apply btn-3d bg-streak-500 text-white border-streak-700 hover:bg-streak-400 hover:border-streak-600;
+  }
+  .btn-3d-xp {
+    @apply btn-3d bg-xp-400 text-xp-700 border-xp-600 hover:bg-xp-300 hover:border-xp-500;
+  }
+  .btn-3d-neutral {
+    @apply btn-3d bg-white text-slate-700 border-slate-300
+           hover:bg-slate-50
+           dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700 dark:hover:bg-slate-700;
+  }
+  .btn-3d-ghost {
+    @apply relative inline-flex items-center justify-center gap-2 select-none
+           rounded-2xl px-5 py-3 text-sm font-extrabold uppercase tracking-wide
+           text-slate-500 dark:text-slate-300
+           hover:bg-slate-100 dark:hover:bg-slate-800
+           transition-colors duration-150
+           disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  /* Compact 3D button (icon-sized) */
+  .btn-3d-sm {
+    @apply px-3 py-2 text-xs;
+  }
+  .btn-3d-lg {
+    @apply px-7 py-4 text-base;
+  }
+
+  /* Legacy aliases (backwards-compatible) — used by existing pages */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none active:scale-95;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-bold transition-all duration-150 disabled:opacity-50 disabled:pointer-events-none active:scale-95;
   }
   .btn-primary {
-    @apply btn bg-primary-600 text-white hover:bg-primary-700 hover:shadow-lg hover:shadow-primary-500/25;
+    @apply btn-3d-primary;
   }
   .btn-secondary {
-    @apply btn bg-slate-200 text-slate-900 hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-100 dark:hover:bg-slate-600;
+    @apply btn-3d-neutral;
   }
   .btn-ghost {
-    @apply btn hover:bg-slate-100 dark:hover:bg-slate-800;
+    @apply btn-3d-ghost;
   }
+
+  /* ----- Inputs ----- */
   .input {
-    @apply w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm transition-all duration-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 focus:outline-none;
+    @apply w-full rounded-2xl border-2 border-slate-200 dark:border-slate-700
+           bg-white dark:bg-slate-900 px-4 py-3 text-sm font-semibold
+           transition-all duration-200
+           placeholder:text-slate-400 placeholder:font-medium
+           focus:border-primary-500 focus:outline-none;
   }
   .label {
-    @apply block text-sm font-medium mb-1 text-slate-700 dark:text-slate-300;
+    @apply block text-xs font-bold uppercase tracking-widest mb-1.5 text-slate-500 dark:text-slate-400;
+  }
+
+  /* ----- Stat pills (streak, xp, lives) ----- */
+  .stat-pill {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-2xl font-extrabold text-sm select-none;
+  }
+  .stat-pill-streak {
+    @apply stat-pill text-streak-600 dark:text-streak-400;
+  }
+  .stat-pill-xp {
+    @apply stat-pill text-xp-600 dark:text-xp-400;
+  }
+  .stat-pill-lives {
+    @apply stat-pill text-lives-500 dark:text-lives-400;
+  }
+
+  /* ----- Lesson tree node (Duolingo path) ----- */
+  .lesson-node {
+    @apply relative inline-flex items-center justify-center
+           w-[76px] h-[76px] rounded-full
+           border-b-[6px] cursor-pointer
+           transition-all duration-100
+           active:border-b-0 active:translate-y-[6px]
+           font-extrabold text-white;
+  }
+  .lesson-node-active {
+    @apply lesson-node bg-primary-500 border-primary-700 shadow-lg shadow-primary-500/30;
+  }
+  .lesson-node-done {
+    @apply lesson-node bg-xp-400 border-xp-600 text-xp-700;
+  }
+  .lesson-node-locked {
+    @apply lesson-node bg-slate-300 border-slate-400 text-slate-500
+           dark:bg-slate-700 dark:border-slate-800 dark:text-slate-500
+           cursor-not-allowed pointer-events-none;
+  }
+  .lesson-node-current {
+    @apply lesson-node-active;
   }
 }
 
@@ -57,27 +156,27 @@
   .stagger-5 { animation-delay: 300ms; }
   .stagger-6 { animation-delay: 360ms; }
 
-  /* Mesh gradient background — used in hero */
+  /* Brand mesh gradient — indigo / blue */
   .gradient-mesh {
     background-image:
-      radial-gradient(at 12% 18%, rgba(99, 102, 241, 0.55) 0, transparent 45%),
-      radial-gradient(at 88% 12%, rgba(168, 85, 247, 0.55) 0, transparent 45%),
-      radial-gradient(at 80% 92%, rgba(236, 72, 153, 0.45) 0, transparent 45%),
-      radial-gradient(at 12% 88%, rgba(56, 189, 248, 0.45) 0, transparent 45%);
-    background-color: #4338ca;
+      radial-gradient(at 12% 18%, rgba(37, 99, 235, 0.65) 0, transparent 45%),
+      radial-gradient(at 88% 12%, rgba(59, 130, 246, 0.55) 0, transparent 45%),
+      radial-gradient(at 80% 92%, rgba(14, 165, 233, 0.45) 0, transparent 45%),
+      radial-gradient(at 12% 88%, rgba(99, 102, 241, 0.45) 0, transparent 45%);
+    background-color: #1e3a8a;
     background-size: 220% 220%;
     animation: gradient-shift 14s ease infinite;
   }
 
-  /* Animated gradient text */
+  /* Solid brand gradient text */
   .text-gradient {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+    @apply bg-clip-text text-transparent font-extrabold;
+    background-image: linear-gradient(135deg, #1d4ed8, #2563eb, #0ea5e9);
     background-size: 200% 200%;
     animation: gradient-shift 6s ease infinite;
   }
 
-  /* Animated gradient border on hover */
+  /* Hover glow border (indigo) */
   .hover-glow {
     position: relative;
     isolation: isolate;
@@ -87,7 +186,7 @@
     position: absolute;
     inset: -1px;
     border-radius: inherit;
-    background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+    background: linear-gradient(135deg, #2563eb, #3b82f6, #0ea5e9);
     opacity: 0;
     transition: opacity 0.35s ease;
     z-index: -1;
@@ -132,5 +231,32 @@
   .bg-dot-pattern {
     background-image: radial-gradient(circle, rgba(148, 163, 184, 0.18) 1px, transparent 1px);
     background-size: 16px 16px;
+  }
+
+  /* Hide scrollbar but allow scrolling */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Progress bar fill — Duolingo style */
+  .progress-track {
+    @apply relative h-4 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden;
+  }
+  .progress-fill {
+    @apply absolute inset-y-0 left-0 rounded-full bg-success-500;
+    transition: width 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    right: 6px;
+    height: 4px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.45);
   }
 }

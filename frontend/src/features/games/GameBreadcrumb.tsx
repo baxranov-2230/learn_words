@@ -6,17 +6,17 @@ import { coursesApi } from '@/api/courses';
 import { lessonsApi } from '@/api/lessons';
 
 interface Props {
-  gameKey: 'flashcards' | 'test' | 'match' | 'spelling' | 'gravity';
+  gameKey: 'flashcards' | 'test' | 'match' | 'spelling' | 'scramble';
   /** O'yin hali tugamagan bo'lsa true — orqaga borishda modal chiqadi */
   isGameActive?: boolean;
 }
 
 const GAME_GRADIENTS: Record<Props['gameKey'], string> = {
   flashcards: 'from-emerald-500 to-teal-600',
-  test: 'from-primary-500 via-violet-500 to-fuchsia-500',
+  test: 'from-primary-500 via-primary-500 to-sky-500',
   match: 'from-sky-500 to-blue-600',
   spelling: 'from-amber-500 to-orange-600',
-  gravity: 'from-rose-500 to-pink-600',
+  scramble: 'from-streak-500 to-lives-500',
 };
 
 export function GameBreadcrumb({ gameKey, isGameActive = false }: Props) {
@@ -156,7 +156,7 @@ export function GameBreadcrumb({ gameKey, isGameActive = false }: Props) {
                   setShowModal(false);
                   navigate(exitTarget || backTo);
                 }}
-                className="flex-1 px-4 py-3 rounded-2xl bg-rose-500 text-white font-bold text-sm hover:bg-rose-600 transition-colors shadow-md shadow-rose-500/30"
+                className="flex-1 px-4 py-3 rounded-2xl bg-lives-500 text-white font-bold text-sm hover:bg-lives-600 transition-colors shadow-md shadow-lives-500/30"
               >
                 {t('games.exitGame', "Chiqish")}
               </button>

@@ -63,7 +63,7 @@ export interface CardCreate {
   position?: number;
 }
 
-export type GameType = 'flashcards' | 'test' | 'match' | 'spelling' | 'gravity';
+export type GameType = 'flashcards' | 'test' | 'match' | 'spelling' | 'scramble';
 
 export interface FlashcardItem {
   card_id: number;
@@ -240,6 +240,20 @@ export interface DueCard {
   transcription?: string | null;
   next_review_at: string | null;
   mastery_level: number;
+}
+
+export interface WeakCard {
+  id: number;
+  deck_id: number;
+  term: string;
+  definition: string;
+  transcription?: string | null;
+  mastery_level: number;
+  incorrect_count: number;
+  correct_count: number;
+  flashcard_incorrect: number;
+  test_incorrect: number;
+  last_reviewed_at: string | null;
 }
 
 export interface LeaderboardEntry {

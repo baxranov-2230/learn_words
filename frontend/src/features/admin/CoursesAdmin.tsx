@@ -55,7 +55,7 @@ export function CoursesAdmin() {
         </div>
         <Link
           to="/admin/courses/new"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white text-sm font-semibold shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-primary-500 to-purple-600 text-white text-sm font-semibold shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 5v14" /><path d="M5 12h14" />
@@ -84,7 +84,7 @@ export function CoursesAdmin() {
             <p className="text-sm text-slate-500 mb-4">{t('admin.courses.empty')}</p>
             <Link
               to="/admin/courses/new"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-fuchsia-600 dark:text-fuchsia-400 hover:underline"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-600 dark:text-primary-400 hover:underline"
             >
               {t('admin.courses.newTitle')} →
             </Link>
@@ -145,7 +145,7 @@ export function CoursesAdmin() {
                     <button
                       onClick={() => setManagingId(c.id)}
                       title={t('admin.courses.manage')}
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-fuchsia-700 dark:text-fuchsia-300 bg-fuchsia-50 dark:bg-fuchsia-500/10 hover:bg-fuchsia-100 dark:hover:bg-fuchsia-500/20 transition-all"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-primary-700 dark:text-primary-300 bg-primary-50 dark:bg-primary-500/10 hover:bg-primary-100 dark:hover:bg-primary-500/20 transition-all"
                     >
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                         <circle cx="12" cy="12" r="3" />
@@ -177,7 +177,7 @@ export function CoursesAdmin() {
                         if (confirm(t('admin.courses.deleteConfirm'))) removeMut.mutate(c.id);
                       }}
                       title={t('common.delete')}
-                      className="inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-400 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-500/10 transition-all"
+                      className="inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-400 hover:bg-lives-50 hover:text-lives-600 dark:hover:bg-lives-500/10 transition-all"
                     >
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M3 6h18" />

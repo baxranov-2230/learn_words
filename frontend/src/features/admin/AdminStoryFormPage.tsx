@@ -25,7 +25,7 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean
   return (
     <span
       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 cursor-pointer ${
-        checked ? 'bg-gradient-to-r from-primary-500 to-violet-600' : 'bg-slate-300 dark:bg-slate-600'
+        checked ? 'bg-gradient-to-r from-primary-500 to-primary-600' : 'bg-slate-300 dark:bg-slate-600'
       }`}
       onClick={() => onChange(!checked)}
     >
@@ -172,7 +172,7 @@ export function AdminStoryFormPage() {
           </svg>
         </button>
         <div className="flex items-center gap-3">
-          <span className={`inline-flex items-center justify-center w-10 h-10 rounded-xl text-white shadow-md ${editingId ? 'bg-gradient-to-br from-primary-500 to-violet-600' : 'bg-gradient-to-br from-amber-500 to-orange-600'}`}>
+          <span className={`inline-flex items-center justify-center w-10 h-10 rounded-xl text-white shadow-md ${editingId ? 'bg-gradient-to-br from-primary-500 to-primary-600' : 'bg-gradient-to-br from-amber-500 to-orange-600'}`}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
               <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
@@ -235,7 +235,7 @@ export function AdminStoryFormPage() {
                         setAudioUrl(null);
                       }
                     }}
-                    className="inline-flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-500/10 transition-all"
+                    className="inline-flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-semibold text-lives-600 hover:bg-lives-50 dark:text-lives-400 dark:hover:bg-lives-500/10 transition-all"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
@@ -258,8 +258,8 @@ export function AdminStoryFormPage() {
 
           {/* Course selector */}
           <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
-            <div className="px-4 py-3 bg-fuchsia-50 dark:bg-fuchsia-500/10 border-b border-slate-200 dark:border-slate-700 flex items-center gap-3">
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-fuchsia-500 to-purple-600 text-white shadow-md">
+            <div className="px-4 py-3 bg-primary-50 dark:bg-primary-500/10 border-b border-slate-200 dark:border-slate-700 flex items-center gap-3">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-purple-600 text-white shadow-md">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
                   <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
@@ -282,7 +282,7 @@ export function AdminStoryFormPage() {
                 ))}
               </select>
               {courseId && (
-                <p className="text-xs text-fuchsia-700 dark:text-fuchsia-300 mt-2 flex items-center gap-1.5">
+                <p className="text-xs text-primary-700 dark:text-primary-300 mt-2 flex items-center gap-1.5">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
@@ -310,7 +310,7 @@ export function AdminStoryFormPage() {
           {/* Deck selector */}
           <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
             <div className="px-4 py-3 bg-primary-50 dark:bg-primary-500/10 border-b border-slate-200 dark:border-slate-700 flex items-center gap-3">
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-violet-600 text-white shadow-md">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-md">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M2 7l10-5 10 5-10 5L2 7z" />
                   <path d="M2 17l10 5 10-5" />
@@ -443,7 +443,7 @@ export function AdminStoryFormPage() {
                     type="button"
                     onClick={() => removeWord(idx)}
                     disabled={words.length === 1}
-                    className="flex-shrink-0 inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-400 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-500/10 disabled:opacity-30 disabled:pointer-events-none transition-all"
+                    className="flex-shrink-0 inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-400 hover:bg-lives-50 hover:text-lives-600 dark:hover:bg-lives-500/10 disabled:opacity-30 disabled:pointer-events-none transition-all"
                     aria-label="remove"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

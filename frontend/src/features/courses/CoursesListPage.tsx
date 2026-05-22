@@ -91,8 +91,8 @@ export function CoursesListPage() {
             onClick={() => setLanguage(null)}
             className={`flex-shrink-0 inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl border transition-all hover:-translate-y-0.5 ${
               languageId === null
-                ? 'border-transparent bg-gradient-to-r from-primary-500 to-violet-600 text-white shadow-md'
-                : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-primary-300'
+                ? 'border-transparent bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-md'
+                : 'border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-primary-400 dark:hover:border-primary-500'
             }`}
           >
             <span className="text-base">🌐</span>
@@ -110,7 +110,7 @@ export function CoursesListPage() {
                 className={`flex-shrink-0 inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl border transition-all hover:-translate-y-0.5 ${
                   active
                     ? `border-transparent bg-gradient-to-r ${grad} text-white shadow-md`
-                    : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-primary-300'
+                    : 'border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-primary-400 dark:hover:border-primary-500'
                 }`}
               >
                 <span className="text-base">
@@ -137,7 +137,7 @@ export function CoursesListPage() {
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
-              className={`rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-5 animate-fade-in-up stagger-${(i % 6) + 1}`}
+              className={`rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 p-5 animate-fade-in-up stagger-${(i % 6) + 1}`}
             >
               <div className="h-28 rounded-xl skeleton-shimmer mb-4" />
               <div className="h-4 w-2/3 rounded skeleton-shimmer mb-2" />
@@ -148,7 +148,7 @@ export function CoursesListPage() {
       )}
 
       {!isLoading && (!courses || courses.length === 0) && (
-        <div className="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-12 text-center animate-fade-in">
+        <div className="rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 p-12 text-center animate-fade-in">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 text-slate-400 mb-3">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
@@ -188,7 +188,7 @@ function CourseCard({
   return (
     <Link
       to={`/courses/${course.id}`}
-      className={`group relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl animate-fade-in-up stagger-${(index % 6) + 1}`}
+      className={`group relative overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl animate-fade-in-up stagger-${(index % 6) + 1}`}
     >
       <div className={`relative h-32 bg-gradient-to-br ${gradient} overflow-hidden`}>
         <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/15 blur-2xl group-hover:scale-125 transition-transform duration-700" />

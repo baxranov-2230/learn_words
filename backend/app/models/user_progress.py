@@ -29,5 +29,7 @@ class UserProgress(Base, TimestampMixin):
     )
     correct_count: Mapped[int] = mapped_column(default=0, nullable=False)
     incorrect_count: Mapped[int] = mapped_column(default=0, nullable=False)
+    flashcard_incorrect: Mapped[int] = mapped_column(default=0, nullable=False)
+    test_incorrect: Mapped[int] = mapped_column(default=0, nullable=False)
 
     user: Mapped["User"] = relationship(back_populates="progress")  # type: ignore[name-defined]  # noqa: F821

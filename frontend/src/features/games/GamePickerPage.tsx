@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import type { ReactNode } from 'react';
 
 interface GameDef {
-  id: 'flashcards' | 'test' | 'match' | 'spelling' | 'gravity';
+  id: 'flashcards' | 'test' | 'match' | 'spelling' | 'scramble';
   key: string;
   descKey: string;
   gradient: string;
@@ -16,8 +16,8 @@ const GAMES: GameDef[] = [
     id: 'flashcards',
     key: 'flashcards',
     descKey: 'lesson.gameMatchDesc',
-    gradient: 'from-emerald-500 via-teal-500 to-cyan-600',
-    shadow: 'shadow-emerald-500/30',
+    gradient: 'from-success-500 to-success-600',
+    shadow: 'shadow-success-500/30',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <rect x="2" y="6" width="14" height="14" rx="2" />
@@ -29,8 +29,8 @@ const GAMES: GameDef[] = [
     id: 'test',
     key: 'test',
     descKey: 'lesson.gameTestDesc',
-    gradient: 'from-primary-500 via-violet-500 to-fuchsia-500',
-    shadow: 'shadow-violet-500/30',
+    gradient: 'from-primary-500 to-primary-600',
+    shadow: 'shadow-primary-500/30',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M9 11l3 3L22 4" />
@@ -42,8 +42,8 @@ const GAMES: GameDef[] = [
     id: 'match',
     key: 'match',
     descKey: 'lesson.gameMatchDesc',
-    gradient: 'from-sky-500 via-blue-500 to-indigo-600',
-    shadow: 'shadow-blue-500/30',
+    gradient: 'from-sky-500 to-primary-600',
+    shadow: 'shadow-sky-500/30',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
@@ -55,8 +55,8 @@ const GAMES: GameDef[] = [
     id: 'spelling',
     key: 'spelling',
     descKey: 'lesson.gameSpellingDesc',
-    gradient: 'from-amber-500 via-orange-500 to-red-500',
-    shadow: 'shadow-orange-500/30',
+    gradient: 'from-xp-400 to-streak-500',
+    shadow: 'shadow-streak-500/30',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
@@ -65,16 +65,18 @@ const GAMES: GameDef[] = [
     ),
   },
   {
-    id: 'gravity',
-    key: 'gravity',
-    descKey: 'lesson.gameGravityDesc',
-    gradient: 'from-rose-500 via-pink-500 to-fuchsia-600',
-    shadow: 'shadow-pink-500/30',
+    id: 'scramble',
+    key: 'scramble',
+    descKey: 'lesson.gameScrambleDesc',
+    gradient: 'from-lives-500 to-lives-600',
+    shadow: 'shadow-lives-500/30',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" />
-        <path d="M12 2v20" />
-        <path d="M2 12h20" />
+        <rect x="3" y="3" width="5" height="5" rx="1" />
+        <rect x="3" y="16" width="5" height="5" rx="1" />
+        <rect x="16" y="3" width="5" height="5" rx="1" />
+        <rect x="16" y="16" width="5" height="5" rx="1" />
+        <path d="M8 5.5h8M8 18.5h8M5.5 8v8M18.5 8v8" strokeDasharray="2 2" />
       </svg>
     ),
   },
@@ -97,7 +99,7 @@ export function GamePickerPage() {
           <Link
             key={g.id}
             to={`/decks/${id}/play/${g.id}`}
-            className={`group relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl ${g.shadow} animate-fade-in-up stagger-${(i % 6) + 1}`}
+            className={`group card overflow-hidden p-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${g.shadow} hover:border-primary-400 dark:hover:border-primary-500 animate-fade-in-up stagger-${(i % 6) + 1}`}
           >
             <div
               className={`pointer-events-none absolute -right-12 -top-12 w-40 h-40 rounded-full bg-gradient-to-br ${g.gradient} opacity-15 blur-2xl transition-all duration-700 group-hover:opacity-30 group-hover:scale-125`}
@@ -108,11 +110,11 @@ export function GamePickerPage() {
               >
                 {g.icon}
               </div>
-              <h3 className="mt-4 text-lg font-bold">{t(`games.${g.key}`)}</h3>
-              <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2">
+              <h3 className="mt-4 text-lg font-extrabold text-slate-900 dark:text-slate-100">{t(`games.${g.key}`)}</h3>
+              <p className="mt-1 text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2">
                 {t(g.descKey)}
               </p>
-              <div className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-slate-600 dark:text-slate-300 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+              <div className="mt-4 inline-flex items-center gap-1 text-xs font-extrabold uppercase tracking-wider text-slate-600 dark:text-slate-300 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                 {t('games.start')}
                 <svg
                   className="transition-transform group-hover:translate-x-1"

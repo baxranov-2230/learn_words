@@ -1,10 +1,10 @@
 export const COURSE_COLOR_OPTIONS = [
-  { key: 'indigo', gradient: 'from-indigo-500 via-violet-500 to-purple-600' },
-  { key: 'emerald', gradient: 'from-emerald-500 via-teal-500 to-cyan-600' },
-  { key: 'amber', gradient: 'from-amber-500 via-orange-500 to-red-500' },
-  { key: 'sky', gradient: 'from-sky-500 via-blue-500 to-indigo-600' },
-  { key: 'rose', gradient: 'from-rose-500 via-pink-500 to-fuchsia-600' },
-  { key: 'fuchsia', gradient: 'from-fuchsia-500 via-purple-500 to-violet-600' },
+  { key: 'indigo', gradient: 'from-primary-500 via-primary-600 to-sky-500' },
+  { key: 'emerald', gradient: 'from-success-500 via-success-600 to-teal-600' },
+  { key: 'amber', gradient: 'from-xp-400 via-streak-500 to-lives-500' },
+  { key: 'sky', gradient: 'from-sky-400 via-sky-500 to-primary-600' },
+  { key: 'rose', gradient: 'from-lives-500 via-lives-600 to-streak-500' },
+  { key: 'fuchsia', gradient: 'from-primary-500 via-primary-600 to-sky-400' },
 ] as const;
 
 const GRADIENT_BY_KEY: Record<string, string> = Object.fromEntries(

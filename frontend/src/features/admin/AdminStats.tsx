@@ -116,7 +116,7 @@ export function AdminStats() {
       <StatCard
         label={t('admin.stat.users')}
         value={data?.users_total ?? 0}
-        gradient="from-indigo-500 via-violet-500 to-purple-600"
+        gradient="from-primary-500 via-primary-500 to-purple-600"
         delayClass="stagger-1"
         icon={
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -143,7 +143,7 @@ export function AdminStats() {
       <StatCard
         label={t('admin.stat.publicDecks')}
         value={data?.public_decks ?? 0}
-        gradient="from-sky-500 via-blue-500 to-indigo-600"
+        gradient="from-sky-500 via-blue-500 to-primary-600"
         hint={`${publicPct}%`}
         delayClass="stagger-3"
         icon={
@@ -169,7 +169,7 @@ export function AdminStats() {
       <StatCard
         label={t('admin.stat.gameSessions')}
         value={data?.game_sessions_total ?? 0}
-        gradient="from-rose-500 via-pink-500 to-fuchsia-600"
+        gradient="from-lives-500 via-pink-500 to-primary-600"
         delayClass="stagger-5"
         icon={
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

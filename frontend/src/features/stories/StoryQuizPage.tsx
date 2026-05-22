@@ -100,7 +100,7 @@ export function StoryQuizPage() {
     
     return (
       <div className="max-w-2xl mx-auto mt-8 sm:mt-12 p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-800 border-2 border-green-500/50 shadow-xl shadow-green-500/10 text-center animate-scale-in">
-        <div className={`w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full ${passed ? 'bg-green-100 dark:bg-green-500/20 text-green-500' : 'bg-rose-100 dark:bg-rose-500/20 text-rose-500'} flex items-center justify-center mb-4 sm:mb-5`}>
+        <div className={`w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full ${passed ? 'bg-green-100 dark:bg-green-500/20 text-green-500' : 'bg-lives-100 dark:bg-lives-500/20 text-lives-500'} flex items-center justify-center mb-4 sm:mb-5`}>
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="sm:w-10 sm:h-10">
             {passed ? (
               <polyline points="20 6 9 17 4 12" />
@@ -114,7 +114,7 @@ export function StoryQuizPage() {
           {passed ? t('games.passedTitle', 'Tabriklaymiz!') : t('games.failedTitle', 'Yana harakat qilib ko\'ring!')}
         </h3>
         <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-2">
-          Natijangiz: <span className={`font-black text-xl sm:text-2xl ml-1 ${passed ? 'text-green-600 dark:text-green-400' : 'text-rose-600 dark:text-rose-400'}`}>{score} / {quiz.questions.length}</span> ({scorePct}%)
+          Natijangiz: <span className={`font-black text-xl sm:text-2xl ml-1 ${passed ? 'text-green-600 dark:text-green-400' : 'text-lives-600 dark:text-lives-400'}`}>{score} / {quiz.questions.length}</span> ({scorePct}%)
         </p>
         
         {lessonId && (
@@ -247,7 +247,7 @@ export function StoryQuizPage() {
             if (opt === q.correct) {
               btnClass += "border-green-500 bg-green-50 dark:bg-green-500/20 text-green-700 dark:text-green-400 shadow-sm z-10 transform scale-[1.02]";
             } else if (opt === selectedOpt) {
-              btnClass += "border-rose-500 bg-rose-50 dark:bg-rose-500/20 text-rose-700 dark:text-rose-400 shadow-sm";
+              btnClass += "border-lives-500 bg-lives-50 dark:bg-lives-500/20 text-lives-700 dark:text-lives-400 shadow-sm";
             } else {
               btnClass += "border-slate-100 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-800/50 text-slate-400 dark:text-slate-500 opacity-60";
             }
@@ -287,8 +287,8 @@ export function StoryQuizPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 rounded-2xl bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-600 dark:text-amber-400">
+              <div className="w-16 h-16 rounded-2xl bg-primary-100 dark:bg-primary-500/20 flex items-center justify-center">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary-600 dark:text-primary-400">
                   <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
                   <line x1="12" y1="9" x2="12" y2="13" />
                   <line x1="12" y1="17" x2="12.01" y2="17" />
@@ -313,7 +313,7 @@ export function StoryQuizPage() {
                   setExitTarget(null);
                   navigate(exitTarget!);
                 }}
-                className="flex-1 px-4 py-3 rounded-2xl bg-rose-500 text-white font-bold text-sm hover:bg-rose-600 transition-colors shadow-md shadow-rose-500/30"
+                className="flex-1 px-4 py-3 rounded-2xl bg-lives-500 text-white font-bold text-sm hover:bg-lives-600 transition-colors shadow-md shadow-lives-500/30"
               >
                 Chiqish
               </button>

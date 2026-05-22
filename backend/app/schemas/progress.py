@@ -6,6 +6,7 @@ from pydantic import BaseModel, ConfigDict, Field
 class ReviewRequest(BaseModel):
     card_id: int
     quality: int = Field(ge=0, le=5)
+    source: str = Field(default='flashcard', pattern='^(flashcard|test)$')
 
 
 class ReviewResponse(BaseModel):
@@ -27,6 +28,22 @@ class DueCard(BaseModel):
     transcription: str | None = None
     next_review_at: datetime | None = None
     mastery_level: int = 0
+
+
+class WeakCard(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    deck_id: int
+    term: str
+    definition: str
+    transcription: str | None = None
+    mastery_level: int = 0
+    incorrect_count: int = 0
+    correct_count: int = 0
+    flashcard_incorrect: int = 0
+    test_incorrect: int = 0
+    last_reviewed_at: datetime | None = None
 
 
 class ProgressSummary(BaseModel):

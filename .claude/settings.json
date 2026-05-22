@@ -23,7 +23,21 @@
       "Bash(python3 -c \"import ast; [ast.parse\\(open\\(f\\).read\\(\\)\\) for f in ['/home/ahror/Projects/Learn_Words/backend/app/api/v1/courses.py','/home/ahror/Projects/Learn_Words/backend/app/services/course.py','/home/ahror/Projects/Learn_Words/backend/app/schemas/course.py']]; print\\('OK'\\)\")",
       "Bash(grep -E '\\\\.\\(tsx|ts|jsx|js|vue|svelte\\)$')",
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('admin',{}\\), indent=2, ensure_ascii=False\\)\\)\")",
-      "Bash(tsc --version)"
+      "Bash(tsc --version)",
+      "Bash(docker exec *)",
+      "Bash(docker restart *)",
+      "Bash(python3)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5174/)",
+      "Bash(curl -s http://localhost:5174/)",
+      "Bash(curl -s -o /tmp/index.js -w \"%{http_code}\" \"http://localhost:5174/src/main.tsx?t=$\\(date +%s\\)\")",
+      "Bash(curl -s \"http://localhost:5174/src/styles/globals.css?t=$\\(date +%s\\)\")",
+      "Bash(sed -n '100,115p' /home/ahror/Projects/Learn_Words/frontend/src/i18n/locales/uz.json)",
+      "Bash(sed -n '100,115p' /home/ahror/Projects/Learn_Words/frontend/src/i18n/locales/en.json)",
+      "Bash(curl -s http://localhost:8001/api/v1/progress/weak -H \"Authorization: Bearer test\")",
+      "Bash(grep -v \"^$\\\\|@import\\\\|vite:css\\\\|4  |\\\\|5  |\\\\|6  |\\\\|7  |\\\\|8  |\")",
+      "Bash(./node_modules/.bin/tsc --noEmit)",
+      "Bash(npm run *)",
+      "Bash(npm install *)"
     ]
   }
 }

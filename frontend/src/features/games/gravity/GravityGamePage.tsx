@@ -18,12 +18,12 @@ interface FallingWord {
 }
 
 const PILL_COLORS = [
-  'from-indigo-500 to-violet-600',
+  'from-primary-500 to-primary-600',
   'from-emerald-500 to-teal-600',
   'from-amber-500 to-orange-600',
-  'from-rose-500 to-pink-600',
+  'from-lives-500 to-pink-600',
   'from-sky-500 to-blue-600',
-  'from-fuchsia-500 to-purple-600',
+  'from-sky-500 to-purple-600',
 ];
 
 export function GravityGamePage() {
@@ -147,7 +147,7 @@ export function GravityGamePage() {
   if (done) {
     return (
       <div className="max-w-lg mx-auto animate-fade-in-up">
-        <div className="relative overflow-hidden rounded-3xl text-white p-8 sm:p-10 text-center bg-gradient-to-br from-rose-500 via-pink-500 to-fuchsia-600">
+        <div className="relative overflow-hidden rounded-3xl text-white p-8 sm:p-10 text-center bg-gradient-to-br from-lives-500 via-pink-500 to-sky-500">
           <div className="pointer-events-none absolute -top-16 -right-16 w-48 h-48 rounded-full bg-white/20 blur-3xl animate-float-slow" />
           <div className="relative">
             <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-white/20 backdrop-blur-sm border border-white/30 shadow-xl mb-4 animate-scale-in">
@@ -194,7 +194,7 @@ export function GravityGamePage() {
 
       {/* Top bar */}
       <div className="flex items-center justify-between gap-3">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-rose-500 to-pink-600 text-white text-sm font-bold shadow-md tabular-nums">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-lives-500 to-pink-600 text-white text-sm font-bold shadow-md tabular-nums">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="0">
             <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 0 0 .95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 0 0-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 0 0-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 0 0-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 0 0 .951-.69z" />
           </svg>
@@ -206,7 +206,7 @@ export function GravityGamePage() {
               key={i}
               className={`text-2xl transition-all duration-300 ${
                 i < lives
-                  ? 'text-rose-500 drop-shadow-md'
+                  ? 'text-lives-500 drop-shadow-md'
                   : 'text-slate-300 dark:text-slate-700 grayscale'
               }`}
             >
@@ -217,7 +217,7 @@ export function GravityGamePage() {
       </div>
 
       {/* Game area */}
-      <div className="relative h-[420px] sm:h-[480px] rounded-3xl bg-gradient-to-b from-slate-900 via-indigo-900 to-purple-900 overflow-hidden border-2 border-slate-700 shadow-xl">
+      <div className="relative h-[420px] sm:h-[480px] rounded-3xl bg-gradient-to-b from-slate-900 via-primary-900 to-purple-900 overflow-hidden border-2 border-slate-700 shadow-xl">
         {/* Stars background */}
         <div
           className="absolute inset-0 pointer-events-none opacity-50"
@@ -228,7 +228,7 @@ export function GravityGamePage() {
           }}
         />
         {/* Bottom danger line */}
-        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-rose-500 to-transparent shadow-[0_0_10px_rgba(244,63,94,0.6)]" />
+        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-lives-500 to-transparent shadow-[0_0_10px_rgba(244,63,94,0.6)]" />
 
         {/* Falling words */}
         {active.map((w) => (
@@ -251,7 +251,7 @@ export function GravityGamePage() {
             className={`absolute inset-0 pointer-events-none animate-fade-in ${
               feedback === 'hit'
                 ? 'bg-emerald-500/15 ring-4 ring-emerald-400/40 ring-inset'
-                : 'bg-rose-500/15 ring-4 ring-rose-400/40 ring-inset'
+                : 'bg-lives-500/15 ring-4 ring-lives-400/40 ring-inset'
             }`}
           />
         )}
@@ -269,7 +269,7 @@ export function GravityGamePage() {
             feedback === 'hit'
               ? 'border-emerald-500 shadow-lg shadow-emerald-500/20'
               : feedback === 'miss'
-              ? 'border-rose-500 shadow-lg shadow-rose-500/20'
+              ? 'border-lives-500 shadow-lg shadow-lives-500/20'
               : ''
           }`}
         />

@@ -53,7 +53,7 @@ export function SpellingGamePage() {
           className={`relative overflow-hidden rounded-3xl text-white p-8 sm:p-10 text-center bg-gradient-to-br ${
             passed
               ? 'from-amber-500 via-orange-500 to-red-500'
-              : 'from-rose-500 via-pink-500 to-fuchsia-600'
+              : 'from-lives-500 via-pink-500 to-sky-500'
           }`}
         >
           <div className="pointer-events-none absolute -top-16 -right-16 w-48 h-48 rounded-full bg-white/20 blur-3xl animate-float-slow" />
@@ -73,7 +73,7 @@ export function SpellingGamePage() {
               </span>
               <span className="text-white/40">|</span>
               <span className="inline-flex items-center gap-1.5 font-semibold">
-                <span className="w-2 h-2 rounded-full bg-rose-300" />
+                <span className="w-2 h-2 rounded-full bg-lives-300" />
                 {incorrect}
               </span>
             </div>
@@ -158,8 +158,8 @@ export function SpellingGamePage() {
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
             {correct}
           </span>
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300">
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-lives-100 text-lives-700 dark:bg-lives-500/15 dark:text-lives-300">
+            <span className="w-1.5 h-1.5 rounded-full bg-lives-500" />
             {incorrect}
           </span>
         </div>
@@ -199,7 +199,7 @@ export function SpellingGamePage() {
           feedback === 'correct'
             ? 'border-emerald-500 shadow-lg shadow-emerald-500/20'
             : feedback === 'wrong'
-            ? 'border-rose-500 shadow-lg shadow-rose-500/20'
+            ? 'border-lives-500 shadow-lg shadow-lives-500/20'
             : 'border-slate-200 dark:border-slate-700 focus-within:border-amber-500 focus-within:shadow-lg focus-within:shadow-amber-500/15'
         }`}
       >
@@ -220,7 +220,7 @@ export function SpellingGamePage() {
           </span>
         )}
         {feedback === 'wrong' && (
-          <span className="absolute right-4 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-10 h-10 rounded-full bg-rose-500 text-white animate-scale-in">
+          <span className="absolute right-4 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-10 h-10 rounded-full bg-lives-500 text-white animate-scale-in">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
@@ -230,8 +230,8 @@ export function SpellingGamePage() {
       </div>
 
       {feedback === 'wrong' && (
-        <div className="rounded-xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 p-3 text-sm animate-fade-in">
-          <span className="text-rose-700 dark:text-rose-300 font-semibold">
+        <div className="rounded-xl bg-lives-50 dark:bg-lives-500/10 border border-lives-200 dark:border-lives-500/30 p-3 text-sm animate-fade-in">
+          <span className="text-lives-700 dark:text-lives-300 font-semibold">
             {t('games.correct')}:{' '}
           </span>
           <span className="font-bold text-slate-900 dark:text-slate-100">
