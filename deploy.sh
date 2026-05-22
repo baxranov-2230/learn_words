@@ -55,8 +55,16 @@ else
 fi
 
 # --- Build va ko'tarish ---
-log "Docker image'lar qurilmoqda va konteynerlar ko'tarilmoqda..."
-$DC -f "$COMPOSE_FILE" up -d --build
+# NO_CACHE=1 bo'lsa cache'siz build (masalan: NO_CACHE=1 ./deploy.sh)
+BUILD_OPTS="--build"
+if [ "${NO_CACHE:-0}" = "1" ]; then
+  log "Cache tozalanmoqda va qayta build qilinmoqda..."
+  $DC -f "$COMPOSE_FILE" build --no-cache
+  BUILD_OPTS=""
+fi
+
+log "Konteynerlar ko'tarilmoqda..."
+$DC -f "$COMPOSE_FILE" up -d $BUILD_OPTS
 
 # --- Eski (ishlatilmayotgan) image'larni tozalash ---
 log "Eski image'lar tozalanmoqda..."
@@ -69,3 +77,4 @@ $DC -f "$COMPOSE_FILE" ps
 echo
 log "Deploy tugadi. Loglarni ko'rish uchun:"
 echo "    $DC -f $COMPOSE_FILE logs -f backend"
+echo "    $DC -f $COMPOSE_FILE logs -f nginx"

@@ -39,7 +39,6 @@ services:
       DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       REDIS_URL: redis://redis:6379/0
     volumes:
-      # Yuklangan rasm/audio fayllar konteyner qayta qurilganda yo'qolmasligi uchun
       - uploads_data:/app/uploads
     depends_on:
       postgres:
@@ -47,14 +46,14 @@ services:
       redis:
         condition: service_healthy
 
-  frontend:
+  # Frontend: vite build + nginx — bitta container ichida
+  nginx:
     build:
       context: ./frontend
       dockerfile: Dockerfile.prod
-    container_name: learnwords-frontend
+    container_name: learnwords-nginx
     restart: always
     ports:
-      # Tashqi port:konteyner porti. 80 — HTTP. Domeningiz shu portga ulanadi.
       - "80:80"
     depends_on:
       - backend
