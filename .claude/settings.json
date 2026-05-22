@@ -44,7 +44,22 @@
       "Bash(python3 -c \"from alembic.config import main; main\\(argv=['upgrade','head']\\)\")",
       "Bash(chmod +x deploy.sh push-deploy.sh)",
       "Bash(bash -n deploy.sh)",
-      "Bash(bash -n push-deploy.sh)"
+      "Bash(bash -n push-deploy.sh)",
+      "Bash(timeout 300 docker build -f frontend/Dockerfile.prod -t learnwords-nginx-test ./frontend)",
+      "Bash(docker run *)",
+      "Bash(docker rmi *)",
+      "Bash(cat > *)",
+      "Bash(curl -s -o /dev/null -w \"  HTTP %{http_code}\\\\n\" http://localhost:8088/)",
+      "Bash(curl -s http://localhost:8088/)",
+      "Bash(curl -s -o /dev/null -w \"  /api/v1/auth/me HTTP %{http_code} \\(401 kutiladi — token yo'q\\)\\\\n\" http://localhost:8088/api/v1/auth/me)",
+      "Bash(curl -s -o /dev/null -w \"  /health HTTP %{http_code}\\\\n\" http://localhost:8088/health)",
+      "Bash(curl -s -o /dev/null -w \"  /api/docs       HTTP %{http_code}\\\\n\" http://localhost:8088/api/docs)",
+      "Bash(curl -s -o /dev/null -w \"  /api/v1/auth/login \\(POST\\) HTTP %{http_code}\\\\n\" -X POST http://localhost:8088/api/v1/auth/login)",
+      "Bash(curl -s http://localhost:8088/api/openapi.json)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(' ',p\\) for p in list\\(d.get\\('paths',{}\\).keys\\(\\)\\)[:12]]\")"
+    ],
+    "additionalDirectories": [
+      "/tmp"
     ]
   }
 }
