@@ -84,6 +84,7 @@ async def create_story(db: AsyncSession, author_id: int | None, data: StoryCreat
                     term=w.word,
                     definition=w.translation,
                     example=w.note,
+                    image_url=w.image_url,
                     position=idx,
                 )
             )
@@ -120,6 +121,7 @@ async def words_from_deck(db: AsyncSession, deck_id: int) -> list[dict]:
             "word": c.term,
             "translation": c.definition,
             "note": c.example,
+            "image_url": c.image_url,
             "position_in_text": idx,
         }
         for idx, c in enumerate(cards)
@@ -189,6 +191,7 @@ async def clone_story_as_deck(
                 term=w.word,
                 definition=w.translation,
                 example=w.note,
+                image_url=w.image_url,
                 position=idx,
             )
         )

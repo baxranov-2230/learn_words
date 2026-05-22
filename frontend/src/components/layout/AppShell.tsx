@@ -49,7 +49,14 @@ export function AppShell() {
   if (!user || isAuthRoute) {
     return (
       <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
-        <header className="border-b-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
+        <header
+          className="dark:border-b-2 dark:border-slate-800 dark:bg-slate-900"
+          style={{
+            background: 'rgba(240, 251, 249, 0.9)',
+            borderBottom: '1px solid rgba(20, 184, 166, 0.14)',
+            backdropFilter: 'blur(12px)',
+          }}
+        >
           <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
             <Link to="/" className="flex items-center gap-2.5">
               <BrandMark />
@@ -87,7 +94,14 @@ export function AppShell() {
 
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top bar */}
-        <header className="sticky top-0 z-30 border-b-2 border-slate-100 dark:border-slate-800 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md">
+        <header
+          className="sticky top-0 z-30 dark:border-b-2 dark:border-slate-800 dark:bg-slate-900/85 backdrop-blur-xl"
+          style={{
+            background: 'rgba(240, 251, 249, 0.82)',
+            borderBottom: '1px solid rgba(20, 184, 166, 0.14)',
+            backdropFilter: 'blur(20px) saturate(1.4)',
+          }}
+        >
           <div className="px-4 sm:px-6 py-2.5 flex items-center gap-3">
             {/* Mobile menu */}
             <button
@@ -268,7 +282,14 @@ function MobileTabBar() {
   ];
   if (!user) return null;
   return (
-    <nav className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t-2 border-slate-100 dark:border-slate-800 pb-[env(safe-area-inset-bottom)]">
+    <nav
+      className="lg:hidden fixed bottom-0 inset-x-0 z-30 dark:bg-slate-900/95 backdrop-blur-xl dark:border-t-2 dark:border-slate-800 pb-[env(safe-area-inset-bottom)]"
+      style={{
+        background: 'rgba(240, 251, 249, 0.92)',
+        borderTop: '1px solid rgba(20, 184, 166, 0.14)',
+        backdropFilter: 'blur(20px) saturate(1.4)',
+      }}
+    >
       <div className="flex items-stretch justify-around">
         {tabs.map((tab) => (
           <NavLink

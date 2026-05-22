@@ -323,6 +323,9 @@
       "pickDeck": "To'plam tanlang",
       "deckPublic": "Ommaviy to'plam",
       "deckPublicHint": "Yaratilgan to'plamni barcha foydalanuvchilarga ko'rinarli qilish.",
+      "deckAutoHint": "So'zlar to'plami hikoya bilan birga avtomatik yaratiladi.",
+      "wordImage": "So'z uchun rasm yuklash",
+      "removeImage": "Rasmni o'chirish",
       "noDeck": "To'plamsiz",
       "importDeckWords": "So'zlarni olib kirish",
       "field": {

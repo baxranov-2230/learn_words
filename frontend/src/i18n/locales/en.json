@@ -323,6 +323,9 @@
       "pickDeck": "Pick a deck",
       "deckPublic": "Public deck",
       "deckPublicHint": "Make the new deck visible to all learners.",
+      "deckAutoHint": "A word deck is created automatically together with the story.",
+      "wordImage": "Upload an image for this word",
+      "removeImage": "Remove image",
       "noDeck": "No deck",
       "importDeckWords": "Import deck words",
       "field": {

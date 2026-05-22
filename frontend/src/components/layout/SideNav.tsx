@@ -310,12 +310,24 @@ export function SideNav({ mobileOpen, onClose }: Props) {
           mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
-        <div className="relative h-full flex flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800">
-          {/* Subtle dot pattern on top */}
-          <div className="pointer-events-none absolute top-0 inset-x-0 h-32 bg-dot-pattern opacity-50" />
+        <div
+          className="relative h-full flex flex-col dark:bg-slate-900 dark:border-r dark:border-slate-800"
+          style={{
+            background: 'linear-gradient(165deg, #ffffff 0%, #f0fbf9 45%, #e3f7f3 100%)',
+            borderRight: '1px solid rgba(20,184,166,0.14)',
+            backdropFilter: 'blur(20px)',
+          }}
+        >
+          {/* Decorative mesh top-left */}
+          <div className="pointer-events-none absolute top-0 left-0 w-full h-48 overflow-hidden rounded-tl-none">
+            <div className="absolute -top-8 -left-8 w-40 h-40 rounded-full bg-teal-200/30 blur-3xl" />
+            <div className="absolute top-4 right-0 w-24 h-24 rounded-full bg-emerald-200/25 blur-2xl" />
+          </div>
+          {/* Dot pattern */}
+          <div className="pointer-events-none absolute top-0 inset-x-0 h-full bg-dot-pattern opacity-30 dark:opacity-50" />
 
           {/* Header / logo */}
-          <div className="relative flex items-center gap-3 px-4 py-5 border-b border-slate-200 dark:border-slate-800">
+          <div className="relative flex items-center gap-3 px-4 py-5 dark:border-b dark:border-slate-800" style={{ borderBottom: '1px solid rgba(20,184,166,0.14)' }}>
             <button
               onClick={(e) => handleNav('/', e as any)}
               className="flex items-center gap-2.5 min-w-0 flex-1 group text-left"
@@ -392,14 +404,15 @@ export function SideNav({ mobileOpen, onClose }: Props) {
           </nav>
 
           {/* Footer */}
-          <div className="relative border-t border-slate-200 dark:border-slate-800 p-3 space-y-2">
+          <div className="relative p-3 space-y-2 dark:border-t dark:border-slate-800" style={{ borderTop: '1px solid rgba(20,184,166,0.14)' }}>
             {user && (
               <>
                 {/* Expanded user pill */}
                 <div
-                  className={`flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 transition-all duration-300 ${
+                  className={`flex items-center gap-2.5 p-2 rounded-xl dark:bg-slate-800/60 transition-all duration-300 ${
                     collapsed ? 'lg:hidden' : ''
                   }`}
+                  style={{ background: 'rgba(204,251,241,0.5)' }}
                 >
                   <div className="relative flex-shrink-0">
                     <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary-500 via-primary-600 to-sky-500 text-white flex items-center justify-center text-sm font-bold shadow-md">
@@ -529,7 +542,8 @@ function SideNavItem({ item, index, collapsed, isOpen, onToggle, isActive, onNav
   }`;
 
   const activeRowClass = `bg-gradient-to-r ${styles.gradient} text-white shadow-lg ${styles.shadow}`;
-  const inactiveRowClass = `text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white`;
+  const inactiveRowClass = `text-slate-700 dark:text-slate-300 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white`
+    + ` hover:bg-teal-50/80`;
 
   if (hasChildren) {
     return (

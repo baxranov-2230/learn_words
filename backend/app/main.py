@@ -46,4 +46,5 @@ app.include_router(api_router, prefix="/api/v1")
 
 # Ensure uploads directory exists
 os.makedirs("uploads/audio", exist_ok=True)
+os.makedirs("uploads/images", exist_ok=True)
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")

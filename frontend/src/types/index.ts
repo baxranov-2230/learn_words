@@ -60,6 +60,7 @@ export interface CardCreate {
   definition: string;
   transcription?: string | null;
   example?: string | null;
+  image_url?: string | null;
   position?: number;
 }
 
@@ -91,6 +92,7 @@ export interface StoryWord {
   word: string;
   translation: string;
   note?: string | null;
+  image_url?: string | null;
   position_in_text: number;
 }
 

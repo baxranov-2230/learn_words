@@ -7,6 +7,7 @@ class StoryWordBase(BaseModel):
     word: str = Field(min_length=1, max_length=200)
     translation: str = Field(min_length=1, max_length=500)
     note: str | None = None
+    image_url: str | None = None
     position_in_text: int = 0
 
 

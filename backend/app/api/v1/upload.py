@@ -9,6 +9,9 @@ router = APIRouter(prefix="/upload", tags=["upload"])
 UPLOAD_DIR = Path("uploads/audio")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
+IMAGE_UPLOAD_DIR = Path("uploads/images")
+IMAGE_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
 @router.post("/audio")
 async def upload_audio(file: UploadFile = File(...)):
     # Fayl turi audio ekanligini tekshirish
@@ -31,3 +34,25 @@ async def upload_audio(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail="Faylni saqlashda xatolik yuz berdi")
     
     return {"audio_url": f"/uploads/audio/{unique_filename}"}
+
+
+@router.post("/image")
+async def upload_image(file: UploadFile = File(...)):
+    # Fayl turi rasm ekanligini tekshirish
+    if not file.content_type or not file.content_type.startswith("image/"):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Fayl formati noto'g'ri. Faqat rasm fayllar ruxsat etiladi."
+        )
+
+    ext = file.filename.split(".")[-1] if file.filename and "." in file.filename else "png"
+    unique_filename = f"{uuid.uuid4()}.{ext}"
+    file_path = IMAGE_UPLOAD_DIR / unique_filename
+
+    try:
+        file_content = await file.read()
+        file_path.write_bytes(file_content)
+    except Exception:
+        raise HTTPException(status_code=500, detail="Faylni saqlashda xatolik yuz berdi")
+
+    return {"image_url": f"/uploads/images/{unique_filename}"}

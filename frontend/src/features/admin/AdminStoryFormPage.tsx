@@ -1,23 +1,21 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useBlocker } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { storiesApi } from '@/api/stories';
-import { adminApi } from '@/api/admin';
-import { cardsApi } from '@/api/decks';
 import { coursesApi } from '@/api/courses';
 import { uploadApi } from '@/api/upload';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { Button } from '@/components/ui/Button';
+import { Modal } from '@/components/ui/Modal';
 
 interface WordRow {
   word: string;
   translation: string;
   note?: string;
+  image_url?: string | null;
 }
-
-type DeckMode = 'new' | 'existing';
 
 const LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
 
@@ -42,10 +40,6 @@ export function AdminStoryFormPage() {
   const editingId = id ? Number(id) : null;
   const qc = useQueryClient();
 
-  const { data: decks } = useQuery({
-    queryKey: ['admin-decks'],
-    queryFn: () => adminApi.decks({ page_size: 200 }),
-  });
   const { data: courses } = useQuery({
     queryKey: ['courses'],
     queryFn: () => coursesApi.list(),
@@ -67,13 +61,13 @@ export function AdminStoryFormPage() {
   const [level, setLevel] = useState('A2');
   const [topic, setTopic] = useState('');
   const [isPublished, setIsPublished] = useState(true);
-  const [deckMode, setDeckMode] = useState<DeckMode>('new');
-  const [existingDeckId, setExistingDeckId] = useState<number | null>(null);
   const [deckIsPublic, setDeckIsPublic] = useState(true);
   const [courseId, setCourseId] = useState<number | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [words, setWords] = useState<WordRow[]>([{ word: '', translation: '' }]);
+  const [uploadingImageIdx, setUploadingImageIdx] = useState<number | null>(null);
+  const [confirmLeave, setConfirmLeave] = useState(false);
 
   useEffect(() => {
     if (existingStory) {
@@ -83,41 +77,30 @@ export function AdminStoryFormPage() {
       setTopic(existingStory.topic ?? '');
       setIsPublished(existingStory.is_published);
       setCourseId(existingStory.course_id ?? null);
-      setExistingDeckId(existingStory.deck_id ?? null);
       setAudioUrl(existingStory.audio_url ?? null);
-      setDeckMode('existing');
       setWords(
         existingStory.words.length > 0
-          ? existingStory.words.map((w) => ({ word: w.word, translation: w.translation, note: w.note ?? undefined }))
+          ? existingStory.words.map((w) => ({ word: w.word, translation: w.translation, note: w.note ?? undefined, image_url: w.image_url ?? null }))
           : [{ word: '', translation: '' }],
       );
     }
   }, [existingStory]);
 
-  const importDeckWordsMut = useMutation({
-    mutationFn: (id: number) => cardsApi.list(id),
-    onSuccess: (cards) => {
-      if (!cards.length) return;
-      setWords(cards.map((c) => ({ word: c.term, translation: c.definition, note: c.example ?? undefined })));
-    },
-  });
-
   const saveMut = useMutation({
     mutationFn: () => {
       const cleanWords = words
         .filter((w) => w.word && w.translation)
-        .map((w, i) => ({ word: w.word, translation: w.translation, note: w.note, position_in_text: i }));
+        .map((w, i) => ({ word: w.word, translation: w.translation, note: w.note, image_url: w.image_url ?? null, position_in_text: i }));
       if (editingId) {
         return storiesApi.updateAdmin(editingId, {
           title, content, audio_url: audioUrl, level: level || null, topic: topic || null,
-          is_published: isPublished, deck_id: existingDeckId, course_id: courseId, words: cleanWords,
+          is_published: isPublished, course_id: courseId, words: cleanWords,
         });
       }
-      const isNew = deckMode === 'new';
       return storiesApi.createAdmin({
         title, content, audio_url: audioUrl, level: level || undefined, topic: topic || undefined,
-        is_published: isPublished, deck_id: isNew ? null : existingDeckId,
-        auto_create_deck: isNew, deck_is_public: deckIsPublic,
+        is_published: isPublished, deck_id: null,
+        auto_create_deck: true, deck_is_public: deckIsPublic,
         course_id: courseId, source_lang: 'en', target_lang: 'uz', words: cleanWords,
       });
     },
@@ -140,8 +123,21 @@ export function AdminStoryFormPage() {
   const canSave =
     title.trim().length > 0 &&
     content.trim().length > 0 &&
-    (editingId !== null || deckMode === 'new' || existingDeckId !== null) &&
     wordsCount > 0;
+
+  const isDirty = title.trim().length > 0 || content.trim().length > 0 || wordsCount > 0;
+
+  const blocker = useBlocker(({ currentLocation, nextLocation }) =>
+    isDirty && !saveMut.isSuccess && currentLocation.pathname !== nextLocation.pathname,
+  );
+
+  const handleLeave = () => {
+    if (isDirty) {
+      setConfirmLeave(true);
+    } else {
+      navigate('/admin?tab=stories');
+    }
+  };
 
   const handleAudioUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -159,12 +155,25 @@ export function AdminStoryFormPage() {
     }
   };
 
+  const handleWordImageUpload = async (idx: number, file: File) => {
+    try {
+      setUploadingImageIdx(idx);
+      const res = await uploadApi.uploadImage(file);
+      updateWord(idx, { image_url: res.image_url });
+    } catch (error) {
+      console.error('Failed to upload image', error);
+      alert(t('common.error'));
+    } finally {
+      setUploadingImageIdx(null);
+    }
+  };
+
   return (
     <div className="max-w-3xl mx-auto space-y-6 animate-fade-in-up">
       {/* Back + Header */}
       <div className="flex items-center gap-4">
         <button
-          onClick={() => navigate('/admin?tab=stories')}
+          onClick={handleLeave}
           className="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-600 transition-all hover:shadow-sm flex-shrink-0"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -307,84 +316,23 @@ export function AdminStoryFormPage() {
             />
           </div>
 
-          {/* Deck selector */}
-          <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
-            <div className="px-4 py-3 bg-primary-50 dark:bg-primary-500/10 border-b border-slate-200 dark:border-slate-700 flex items-center gap-3">
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-md">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M2 7l10-5 10 5-10 5L2 7z" />
-                  <path d="M2 17l10 5 10-5" />
-                  <path d="M2 12l10 5 10-5" />
-                </svg>
-              </span>
-              <div>
-                <div className="text-sm font-bold">{t('admin.stories.deckTitle')}</div>
-                <div className="text-xs text-slate-500">
-                  {editingId ? t('admin.stories.deckEditHint') : t('admin.stories.deckHint')}
+          {/* Deck info — words are bundled with the story automatically */}
+          {!editingId && (
+            <div className="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+              <div className="px-4 py-3 bg-primary-50 dark:bg-primary-500/10 border-b border-slate-200 dark:border-slate-700 flex items-center gap-3">
+                <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-md">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M2 7l10-5 10 5-10 5L2 7z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                  </svg>
+                </span>
+                <div>
+                  <div className="text-sm font-bold">{t('admin.stories.deckTitle')}</div>
+                  <div className="text-xs text-slate-500">{t('admin.stories.deckAutoHint')}</div>
                 </div>
               </div>
-            </div>
-            <div className="p-4 space-y-3">
-              {!editingId && (
-                <div className="grid grid-cols-2 gap-2">
-                  {(['new', 'existing'] as DeckMode[]).map((mode) => {
-                    const active = deckMode === mode;
-                    return (
-                      <button
-                        key={mode}
-                        type="button"
-                        onClick={() => setDeckMode(mode)}
-                        className={`flex items-start gap-2.5 p-3 rounded-xl border-2 text-left transition-all ${
-                          active
-                            ? 'border-primary-500 bg-primary-50 dark:bg-primary-500/10'
-                            : 'border-slate-200 dark:border-slate-700 hover:border-slate-300'
-                        }`}
-                      >
-                        <span className={`mt-0.5 inline-flex items-center justify-center w-5 h-5 rounded-full border-2 flex-shrink-0 transition-all ${active ? 'border-primary-600 bg-primary-600' : 'border-slate-300 dark:border-slate-600'}`}>
-                          {active && (
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                              <polyline points="20 6 9 17 4 12" />
-                            </svg>
-                          )}
-                        </span>
-                        <div>
-                          <div className="text-sm font-semibold">
-                            {t(mode === 'new' ? 'admin.stories.modeNew' : 'admin.stories.modeExisting')}
-                          </div>
-                          <div className="text-xs text-slate-500 mt-0.5">
-                            {t(mode === 'new' ? 'admin.stories.modeNewHint' : 'admin.stories.modeExistingHint')}
-                          </div>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-
-              {(editingId !== null || deckMode === 'existing') && (
-                <div className="flex gap-2">
-                  <select
-                    value={existingDeckId ?? ''}
-                    onChange={(e) => setExistingDeckId(e.target.value ? Number(e.target.value) : null)}
-                    className="input flex-1 cursor-pointer"
-                  >
-                    <option value="">— {t('admin.stories.pickDeck')} —</option>
-                    {decks?.map((d) => (
-                      <option key={d.id} value={d.id}>{d.title} · {d.cards_count} {t('admin.stories.cards')}</option>
-                    ))}
-                  </select>
-                  <Button
-                    variant="secondary"
-                    type="button"
-                    disabled={!existingDeckId || importDeckWordsMut.isPending}
-                    onClick={() => existingDeckId && importDeckWordsMut.mutate(existingDeckId)}
-                  >
-                    {importDeckWordsMut.isPending ? t('common.loading') : t('admin.stories.importDeckWords')}
-                  </Button>
-                </div>
-              )}
-
-              {!editingId && deckMode === 'new' && (
+              <div className="p-4">
                 <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700">
                   <div>
                     <div className="text-sm font-medium">{t('admin.stories.deckPublic')}</div>
@@ -392,9 +340,9 @@ export function AdminStoryFormPage() {
                   </div>
                   <Toggle checked={deckIsPublic} onChange={setDeckIsPublic} />
                 </div>
-              )}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Published toggle */}
           <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
@@ -417,28 +365,90 @@ export function AdminStoryFormPage() {
             </div>
             <div className="space-y-2">
               {words.map((w, idx) => (
-                <div key={idx} className="flex items-center gap-2 p-2 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700">
-                  <span className="w-7 h-7 inline-flex items-center justify-center rounded-lg bg-slate-200 dark:bg-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 flex-shrink-0">
-                    {idx + 1}
-                  </span>
-                  <input
-                    className="input flex-1 min-w-0 py-1.5"
-                    placeholder={t('admin.stories.wordPh')}
-                    value={w.word}
-                    onChange={(e) => updateWord(idx, { word: e.target.value })}
-                  />
-                  <input
-                    className="input flex-1 min-w-0 py-1.5"
-                    placeholder={t('admin.stories.translationPh')}
-                    value={w.translation}
-                    onChange={(e) => updateWord(idx, { translation: e.target.value })}
-                  />
-                  <input
-                    className="input flex-[1.3] min-w-0 py-1.5 hidden sm:block"
-                    placeholder={t('admin.stories.notePh')}
-                    value={w.note ?? ''}
-                    onChange={(e) => updateWord(idx, { note: e.target.value })}
-                  />
+                <div key={idx} className="flex items-start gap-2 p-2 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700">
+                  {/* Image thumbnail / upload */}
+                  <label
+                    className="relative flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden cursor-pointer group/img border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-primary-400 transition-colors bg-white dark:bg-slate-900"
+                    title={t('admin.stories.wordImage')}
+                  >
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="sr-only"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) handleWordImageUpload(idx, file);
+                        e.target.value = '';
+                      }}
+                    />
+                    {uploadingImageIdx === idx ? (
+                      <span className="absolute inset-0 flex items-center justify-center">
+                        <svg className="animate-spin text-primary-500" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                        </svg>
+                      </span>
+                    ) : w.image_url ? (
+                      <>
+                        <img src={w.image_url} alt={w.word} className="w-full h-full object-cover" />
+                        <span className="absolute inset-0 bg-black/0 group-hover/img:bg-black/40 transition-colors flex items-center justify-center">
+                          <svg className="opacity-0 group-hover/img:opacity-100 text-white transition-opacity" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                          </svg>
+                        </span>
+                      </>
+                    ) : (
+                      <span className="absolute inset-0 flex flex-col items-center justify-center text-slate-400 group-hover/img:text-primary-500 transition-colors">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                          <circle cx="9" cy="9" r="2" />
+                          <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+                        </svg>
+                      </span>
+                    )}
+                  </label>
+
+                  <div className="flex-1 min-w-0 space-y-1.5">
+                    <div className="flex items-center gap-2">
+                      <span className="w-6 h-6 inline-flex items-center justify-center rounded-lg bg-slate-200 dark:bg-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 flex-shrink-0">
+                        {idx + 1}
+                      </span>
+                      <input
+                        className="input flex-1 min-w-0 py-1.5"
+                        placeholder={t('admin.stories.wordPh')}
+                        value={w.word}
+                        onChange={(e) => updateWord(idx, { word: e.target.value })}
+                      />
+                      <input
+                        className="input flex-1 min-w-0 py-1.5"
+                        placeholder={t('admin.stories.translationPh')}
+                        value={w.translation}
+                        onChange={(e) => updateWord(idx, { translation: e.target.value })}
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <input
+                        className="input flex-1 min-w-0 py-1.5"
+                        placeholder={t('admin.stories.notePh')}
+                        value={w.note ?? ''}
+                        onChange={(e) => updateWord(idx, { note: e.target.value })}
+                      />
+                      {w.image_url && (
+                        <button
+                          type="button"
+                          onClick={() => updateWord(idx, { image_url: null })}
+                          className="flex-shrink-0 inline-flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-semibold text-lives-600 hover:bg-lives-50 dark:text-lives-400 dark:hover:bg-lives-500/10 transition-all"
+                          title={t('admin.stories.removeImage')}
+                        >
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M3 6h18" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                          </svg>
+                          {t('admin.stories.removeImage')}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
                   <button
                     type="button"
                     onClick={() => removeWord(idx)}
@@ -459,7 +469,7 @@ export function AdminStoryFormPage() {
 
         <div className="px-5 sm:px-6 py-4 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/40 flex items-center justify-between gap-3">
           <button
-            onClick={() => navigate('/admin?tab=stories')}
+            onClick={handleLeave}
             className="text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
           >
             {t('common.cancel')}
@@ -474,12 +484,46 @@ export function AdminStoryFormPage() {
               ? t('common.loading')
               : editingId
               ? t('admin.stories.saveEdit')
-              : deckMode === 'new'
-              ? t('admin.stories.saveBundle')
-              : t('admin.stories.saveLinked')}
+              : t('admin.stories.saveBundle')}
           </Button>
         </div>
       </div>
+
+      <Modal
+        open={blocker.state === 'blocked' || confirmLeave}
+        onClose={() => {
+          blocker.state === 'blocked' ? blocker.reset() : setConfirmLeave(false);
+        }}
+        title={t('admin.stories.leaveTitle', 'Chiqishni tasdiqlang')}
+        footer={
+          <div className="flex gap-3">
+            <button
+              className="btn-3d-neutral"
+              onClick={() => {
+                blocker.state === 'blocked' ? blocker.reset() : setConfirmLeave(false);
+              }}
+            >
+              {t('admin.stories.leaveCancel', 'Qolish')}
+            </button>
+            <button
+              className="btn-3d-danger"
+              onClick={() => {
+                if (blocker.state === 'blocked') {
+                  blocker.proceed();
+                } else {
+                  navigate('/admin?tab=stories');
+                }
+              }}
+            >
+              {t('admin.stories.leaveConfirm', 'Ha, chiqish')}
+            </button>
+          </div>
+        }
+      >
+        <p className="text-sm text-slate-600 dark:text-slate-400">
+          {t('admin.stories.leaveHint', "Kiritilgan ma'lumotlar saqlanmaydi. Haqiqatan ham chiqmoqchimisiz?")}
+        </p>
+      </Modal>
     </div>
   );
 }

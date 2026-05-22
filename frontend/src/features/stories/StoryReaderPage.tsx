@@ -19,6 +19,7 @@ interface TooltipData {
   word: string;
   translation: string;
   note?: string | null;
+  image_url?: string | null;
   x: number;
   y: number;
 }
@@ -160,6 +161,7 @@ export function StoryReaderPage() {
               word: w.word,
               translation: w.translation,
               note: w.note,
+              image_url: w.image_url,
               x: e.clientX,
               y: e.clientY,
             });
@@ -408,6 +410,13 @@ export function StoryReaderPage() {
                 <span className="text-[10px] font-bold text-primary-600 dark:text-primary-400 mt-1 tabular-nums w-6 flex-shrink-0">
                   {String(i + 1).padStart(2, '0')}
                 </span>
+                {w.image_url && (
+                  <img
+                    src={w.image_url}
+                    alt={w.word}
+                    className="w-12 h-12 rounded-xl object-cover flex-shrink-0 border border-slate-200 dark:border-slate-700"
+                  />
+                )}
                 <div className="flex-1 min-w-0">
                   <div className="font-bold text-slate-900 dark:text-slate-100">
                     {w.word}
@@ -700,6 +709,13 @@ function WordTooltip({
             </svg>
           </button>
         </div>
+        {data.image_url && (
+          <img
+            src={data.image_url}
+            alt={data.word}
+            className="w-full h-32 object-cover"
+          />
+        )}
         <div className="p-3.5 space-y-1.5">
           <div className="text-base font-semibold text-slate-900 dark:text-slate-100">
             {data.translation}
