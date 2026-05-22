@@ -71,6 +71,30 @@ Sayt ochiladi:  `http://SERVER_IP/`  (yoki domeningiz)
 
 ---
 
+## 4a. Admin va namuna ma'lumotlar (birinchi marta)
+
+Konteynerlar ko'tarilgandan keyin seed skriptini ishga tushiring:
+
+```bash
+# Default sozlamalar bilan (admin@learnwords.uz / Admin1234!)
+docker compose -f docker-compose.prod.yml exec backend python seed.py
+
+# O'zingizning email/parolizni belgilash:
+docker compose -f docker-compose.prod.yml exec backend python seed.py \
+  --admin-email siz@example.com \
+  --admin-password "KuchliParol123!"
+
+# Faqat admin (namunasiz):
+docker compose -f docker-compose.prod.yml exec backend python seed.py --only-admin
+
+# Barcha namuna ma'lumotlarni o'chirib qayta yuklash (EHTIYOT!):
+docker compose -f docker-compose.prod.yml exec backend python seed.py --reset
+```
+
+**Natija:** 1 admin + 3 hikoya (so'zlar bilan) + 3 namuna deck qo'shiladi.
+
+---
+
 ## 5. Yangilash (kod o'zgargach)
 
 ### Variant A — serverda `deploy.sh` (tavsiya etiladi)

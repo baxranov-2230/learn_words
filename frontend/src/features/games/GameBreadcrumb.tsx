@@ -6,7 +6,7 @@ import { coursesApi } from '@/api/courses';
 import { lessonsApi } from '@/api/lessons';
 
 interface Props {
-  gameKey: 'flashcards' | 'test' | 'match' | 'spelling' | 'scramble';
+  gameKey: 'flashcards' | 'test' | 'match' | 'spelling' | 'scramble' | 'gravity';
   /** O'yin hali tugamagan bo'lsa true — orqaga borishda modal chiqadi */
   isGameActive?: boolean;
 }
@@ -17,6 +17,7 @@ const GAME_GRADIENTS: Record<Props['gameKey'], string> = {
   match: 'from-sky-500 to-blue-600',
   spelling: 'from-amber-500 to-orange-600',
   scramble: 'from-streak-500 to-lives-500',
+  gravity: 'from-violet-500 to-purple-600',
 };
 
 export function GameBreadcrumb({ gameKey, isGameActive = false }: Props) {
