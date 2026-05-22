@@ -41,7 +41,10 @@
       "Bash(python3 -c \"import alembic\")",
       "Bash(echo \"exit:$?\")",
       "Bash(python3 -m alembic upgrade head)",
-      "Bash(python3 -c \"from alembic.config import main; main\\(argv=['upgrade','head']\\)\")"
+      "Bash(python3 -c \"from alembic.config import main; main\\(argv=['upgrade','head']\\)\")",
+      "Bash(chmod +x deploy.sh push-deploy.sh)",
+      "Bash(bash -n deploy.sh)",
+      "Bash(bash -n push-deploy.sh)"
     ]
   }
 }

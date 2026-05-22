@@ -73,12 +73,30 @@ Sayt ochiladi:  `http://SERVER_IP/`  (yoki domeningiz)
 
 ## 5. Yangilash (kod o'zgargach)
 
+### Variant A — serverda `deploy.sh` (tavsiya etiladi)
+Serverda loyiha papkasida turib:
+```bash
+./deploy.sh
+```
+Bu git'dan eng so'nggi kodni tortadi, qayta build qiladi, konteynerlarni
+ko'taradi va eski image'larni tozalaydi. Migration avtomatik bajariladi.
+
+### Variant B — lokaldan SSH orqali `push-deploy.sh`
+O'z kompyuteringizdan (git remote shart emas — kod rsync bilan yuboriladi):
+```bash
+./push-deploy.sh user@server-ip
+# yoki papka boshqa bo'lsa:
+./push-deploy.sh user@server-ip /opt/learn-words
+```
+Bu kodni serverga yuboradi va serverdagi `deploy.sh` ni ishga tushiradi.
+**Birinchi marta** serverda `.env` yaratishni unutmang (skript oxirida
+ko'rsatma chiqadi).
+
+### Variant C — qo'lda
 ```bash
 git pull
 docker compose -f docker-compose.prod.yml up -d --build
 ```
-
-Migration `backend` ishga tushganda avtomatik bajariladi.
 
 ---
 
