@@ -64,7 +64,7 @@ export interface CardCreate {
   position?: number;
 }
 
-export type GameType = 'flashcards' | 'test' | 'match' | 'spelling' | 'scramble';
+export type GameType = 'flashcards' | 'test' | 'match' | 'spelling' | 'scramble' | 'gravity';
 
 export interface FlashcardItem {
   card_id: number;
