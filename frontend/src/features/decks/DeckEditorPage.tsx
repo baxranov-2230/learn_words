@@ -120,6 +120,13 @@ export function DeckEditorPage() {
       qc.invalidateQueries({ queryKey: ['deck', savedId] });
       qc.invalidateQueries({ queryKey: ['cards', savedId] });
       navigate(`/decks/${savedId}`);
+    } catch (err: any) {
+      const detail = err?.response?.data?.detail;
+      const msg = Array.isArray(detail)
+        ? detail.map((d: any) => `${d.loc?.join('.')}: ${d.msg}`).join('\n')
+        : detail || err?.message || t('common.error');
+      console.error('Deck save failed:', err?.response?.data ?? err);
+      alert(`${t('common.error')}\n\n${msg}`);
     } finally {
       setSaving(false);
     }

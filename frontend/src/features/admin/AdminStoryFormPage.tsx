@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, useBlocker } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -68,6 +68,9 @@ export function AdminStoryFormPage() {
   const [words, setWords] = useState<WordRow[]>([{ word: '', translation: '' }]);
   const [uploadingImageIdx, setUploadingImageIdx] = useState<number | null>(null);
   const [confirmLeave, setConfirmLeave] = useState(false);
+  // Saqlash boshlangach (yoki tugagach) navigatsiyani bloklamaslik uchun ishonchli flag.
+  // saveMut.isSuccess React state'i blocker'dan kechikishi mumkin, shuning uchun ref ishlatamiz.
+  const savingRef = useRef(false);
 
   useEffect(() => {
     if (existingStory) {
@@ -87,6 +90,11 @@ export function AdminStoryFormPage() {
   }, [existingStory]);
 
   const saveMut = useMutation({
+    onMutate: () => {
+      // Navigatsiya blokerini o'chiramiz — saqlash muvaffaqiyatli bo'lsa
+      // onSuccess'dagi navigate modal chiqarmasin.
+      savingRef.current = true;
+    },
     mutationFn: () => {
       const cleanWords = words
         .filter((w) => w.word && w.translation)
@@ -111,6 +119,16 @@ export function AdminStoryFormPage() {
       qc.invalidateQueries({ queryKey: ['courses'] });
       navigate('/admin?tab=stories');
     },
+    onError: (err: any) => {
+      // Saqlash muvaffaqiyatsiz — blokerni qayta yoqamiz va xatoni ko'rsatamiz.
+      savingRef.current = false;
+      const detail = err?.response?.data?.detail;
+      const msg = Array.isArray(detail)
+        ? detail.map((d: any) => `${d.loc?.join('.')}: ${d.msg}`).join('\n')
+        : detail || err?.message || t('common.error');
+      console.error('Story save failed:', err?.response?.data ?? err);
+      alert(`${t('common.error')}\n\n${msg}`);
+    },
   });
 
   const updateWord = (idx: number, patch: Partial<WordRow>) =>
@@ -128,7 +146,10 @@ export function AdminStoryFormPage() {
   const isDirty = title.trim().length > 0 || content.trim().length > 0 || wordsCount > 0;
 
   const blocker = useBlocker(({ currentLocation, nextLocation }) =>
-    isDirty && !saveMut.isSuccess && currentLocation.pathname !== nextLocation.pathname,
+    isDirty &&
+    !savingRef.current &&
+    !saveMut.isSuccess &&
+    currentLocation.pathname !== nextLocation.pathname,
   );
 
   const handleLeave = () => {
