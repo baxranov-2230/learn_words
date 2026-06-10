@@ -14,8 +14,16 @@ IMAGE_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 @router.post("/audio")
 async def upload_audio(file: UploadFile = File(...)):
-    # Fayl turi audio ekanligini tekshirish
-    if not file.content_type.startswith("audio/"):
+    # Fayl turi audio ekanligini tekshirish (MIME type yoki kengaytmasi orqali)
+    is_audio = False
+    if file.content_type and file.content_type.startswith("audio/"):
+        is_audio = True
+    else:
+        ext = file.filename.split(".")[-1].lower() if file.filename and "." in file.filename else ""
+        if ext in ["mp3", "wav", "m4a", "ogg", "aac", "flac"]:
+            is_audio = True
+
+    if not is_audio:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Fayl formati noto'g'ri. Faqat audio fayllar ruxsat etiladi."
@@ -38,8 +46,16 @@ async def upload_audio(file: UploadFile = File(...)):
 
 @router.post("/image")
 async def upload_image(file: UploadFile = File(...)):
-    # Fayl turi rasm ekanligini tekshirish
-    if not file.content_type or not file.content_type.startswith("image/"):
+    # Fayl turi rasm ekanligini tekshirish (MIME type yoki kengaytmasi orqali)
+    is_image = False
+    if file.content_type and file.content_type.startswith("image/"):
+        is_image = True
+    else:
+        ext = file.filename.split(".")[-1].lower() if file.filename and "." in file.filename else ""
+        if ext in ["png", "jpg", "jpeg", "webp", "gif", "svg", "bmp"]:
+            is_image = True
+
+    if not is_image:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Fayl formati noto'g'ri. Faqat rasm fayllar ruxsat etiladi."

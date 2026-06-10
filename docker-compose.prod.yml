@@ -55,6 +55,8 @@ services:
     restart: always
     ports:
       - "80:80"
+    volumes:
+      - uploads_data:/app/uploads:ro
     depends_on:
       - backend
 

@@ -168,9 +168,11 @@ export function AdminStoryFormPage() {
       setIsUploading(true);
       const res = await uploadApi.uploadAudio(file);
       setAudioUrl(res.audio_url);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to upload audio', error);
-      alert(t('common.error'));
+      const detail = error.response?.data?.detail;
+      const msg = typeof detail === 'string' ? detail : error.message || t('common.error');
+      alert(`${t('common.error')}: ${msg}`);
     } finally {
       setIsUploading(false);
     }
@@ -181,9 +183,11 @@ export function AdminStoryFormPage() {
       setUploadingImageIdx(idx);
       const res = await uploadApi.uploadImage(file);
       updateWord(idx, { image_url: res.image_url });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to upload image', error);
-      alert(t('common.error'));
+      const detail = error.response?.data?.detail;
+      const msg = typeof detail === 'string' ? detail : error.message || t('common.error');
+      alert(`${t('common.error')}: ${msg}`);
     } finally {
       setUploadingImageIdx(null);
     }
