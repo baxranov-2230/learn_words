@@ -183,7 +183,7 @@ Bu holda `docker-compose.prod.yml` da frontend portini
 | Muammo | Yechim |
 |--------|--------|
 | 502 Bad Gateway | backend hali ko'tarilmagan — `logs backend` ni tekshiring |
-| Rasm yuklanmayapti | `client_max_body_size` (nginx.conf) — hozir 25M |
+| Rasm yuklanmayapti | `client_max_body_size` (nginx.conf) — hozir 100M |
 | Migration xato | `docker compose -f docker-compose.prod.yml logs backend` |
 | Login ishlamaydi | `JWT_SECRET` o'rnatilganini tekshiring |
 | CORS xato | `CORS_ORIGINS` ga domeningizni qo'shing |
